@@ -1,0 +1,3352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PecahanSeru - Media Pembelajaran Pecahan Interaktif</title>
+  <meta name="description" content="Aplikasi media pembelajaran matematika materi pecahan yang interaktif, seru, dan menyenangkan untuk siswa SD/SMP.">
+  
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons for friendly icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Audio Controller & Sound Effects Toggle -->
+  <div class="audio-control-bar">
+    <button id="btnToggleSound" class="audio-btn" title="Nyalakan/Matikan Suara" aria-label="Toggle Sound">
+      <i class="fa-solid fa-volume-high"></i>
+    </button>
+  </div>
+
+  <!-- Background Decorative Animated Shapes -->
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+  <div class="bg-shape shape-3"></div>
+  <div class="bg-shape shape-4"></div>
+
+  <!-- Confetti Canvas for Celebrations -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- ======================================================== -->
+  <!-- HALAMAN LOGIN (MODULAR COMPONENT ARCHITECTURE)           -->
+  <!-- ======================================================== -->
+  <section id="loginSection" class="app-screen active">
+    <!-- 1. BACKGROUND SCENERY (CSS & SVG COMPONENT) -->
+    <div class="scenery-backdrop" aria-hidden="true">
+      <!-- Sky, Sun & Floating Clouds -->
+      <div class="sky-layer">
+        <div class="smiling-sun-decor" title="Matahari Ceria">
+          <div class="sun-glow"></div>
+          <div class="sun-face">
+            <span class="sun-eye left"></span>
+            <span class="sun-eye right"></span>
+            <span class="sun-mouth"></span>
+          </div>
+        </div>
+        <div class="cloud-decor cloud-pos-1"></div>
+        <div class="cloud-decor cloud-pos-2"></div>
+        <div class="cloud-decor cloud-pos-3"></div>
+      </div>
+
+      <!-- Rolling Hills (SVG) -->
+      <div class="hills-layer">
+        <svg class="hills-svg" viewBox="0 0 1440 260" preserveAspectRatio="none">
+          <path d="M0,160 C280,100 520,200 780,130 C1040,60 1260,170 1440,120 L1440,260 L0,260 Z" fill="#86efac" opacity="0.65"></path>
+          <path d="M0,190 C340,140 640,220 940,160 C1220,110 1360,200 1440,175 L1440,260 L0,260 Z" fill="#4ade80"></path>
+        </svg>
+      </div>
+
+      <!-- Midground: School Building & Trees -->
+      <div class="midground-elements">
+        <div class="school-structure-left">
+          <div class="school-roof-triangle">
+            <div class="flag-mount">
+              <div class="flag-fabric"></div>
+            </div>
+          </div>
+          <div class="school-facade">
+            <div class="school-motto-board">
+              <span>ILMU MEMBUAT DUNIA LEBIH LUAS</span>
+            </div>
+            <div class="school-windows-grid">
+              <span class="win-pane"></span>
+              <span class="win-pane"></span>
+            </div>
+          </div>
+        </div>
+        <div class="shrub-cluster shrub-left"></div>
+        <div class="shrub-cluster shrub-right"></div>
+      </div>
+    </div>
+
+    <!-- 2. MAIN INTERACTIVE CONTENT STAGE -->
+    <div class="login-interactive-stage">
+      
+      <!-- TOP HEADER: Signboard Left, 3D Brand Logo, Checklist Right -->
+      <header class="modular-header">
+        <!-- Left Hanging Wooden Signboard -->
+        <div class="wooden-board-left">
+          <div class="hanging-rope rope-1"></div>
+          <div class="hanging-rope rope-2"></div>
+          <div class="wood-plank">
+            <p>Belajar<br>Sambil Bermain<br>Jadi Lebih Mudah!</p>
+          </div>
+        </div>
+
+        <!-- Center 3D Brand Logo: BELAJAR PECAHAN -->
+        <div class="brand-logo-center">
+          <div class="title-row-top">
+            <h1 class="font-3d-blue">BELAJAR</h1>
+          </div>
+          <div class="title-row-bottom">
+            <!-- 3D Colorful Fraction Pie Chart -->
+            <div class="fraction-pie-logo" title="Pecahan Lingkaran">
+              <svg viewBox="0 0 100 100" class="pie-svg-logo">
+                <circle cx="50" cy="50" r="48" fill="#fde047" stroke="#ca8a04" stroke-width="4" />
+                <path d="M50,50 L50,2 A48,48 0 0,1 91,26 Z" fill="#f43f5e" stroke="#be123c" stroke-width="2.5" />
+                <path d="M50,50 L91,26 A48,48 0 0,1 91,74 Z" fill="#fb923c" stroke="#c2410c" stroke-width="2.5" />
+                <path d="M50,50 L91,74 A48,48 0 0,1 21,88 Z" fill="#facc15" stroke="#a16207" stroke-width="2.5" />
+                <path d="M50,50 L21,88 A48,48 0 0,1 50,2 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="2.5" />
+              </svg>
+            </div>
+            <h1 class="font-3d-yellow">PECAHAN</h1>
+          </div>
+          <!-- Navy Ribbon Subtitle -->
+          <div class="ribbon-banner-wrap">
+            <div class="ribbon-tail left"></div>
+            <div class="ribbon-center">Yuk, Temukan Serunya Dunia Pecahan!</div>
+            <div class="ribbon-tail right"></div>
+          </div>
+        </div>
+
+        <!-- Right Decor: 3D 1/2 Fraction & Checklist Signboard -->
+        <div class="header-decor-right">
+          <!-- 3D Fraction 1/2 -->
+          <div class="floating-frac-half" title="Pecahan Satu Per Dua">
+            <span class="half-num">1</span>
+            <span class="half-bar"></span>
+            <span class="half-den">2</span>
+          </div>
+
+          <!-- Wooden Checklist Sign -->
+          <div class="wooden-checklist-card">
+            <div class="chk-item"><i class="fa-solid fa-check"></i> Mengenal</div>
+            <div class="chk-item"><i class="fa-solid fa-check"></i> Memahami</div>
+            <div class="chk-item"><i class="fa-solid fa-check"></i> Menggunakan</div>
+            <div class="chk-subtext">Dalam Kehidupan Sehari-hari</div>
+          </div>
+
+          <!-- Tree Tags -->
+          <div class="tree-tags-vertical">
+            <span class="tree-tag">Berpikir</span>
+            <span class="tree-tag">Berlatih</span>
+            <span class="tree-tag">Berprestasi</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- CENTER SECTION: Boy Character (Left), Login Card (Center), Girl Character (Right) -->
+      <div class="login-center-stage">
+        <!-- Left Character: SD Boy -->
+        <aside class="character-slot slot-left" aria-label="Karakter Siswa SD">
+          <div class="character-figure boy-figure">
+            <img src="assets/elements/boy.png" alt="Karakter Siswa SD Laki-laki" class="char-image img-boy">
+          </div>
+        </aside>
+
+        <!-- Center: Pure HTML/CSS Login Card Component -->
+        <main class="login-card-slot">
+          <div class="pure-login-card" id="mainLoginCard">
+            <div class="card-headings">
+              <h2 class="card-main-title">Selamat Datang!</h2>
+              <p class="card-main-subtitle">Masuk untuk memulai petualangan belajar pecahan!</p>
+            </div>
+
+            <!-- Dynamic Alert Box for Validation -->
+            <div id="loginAlertBox" class="validation-alert hidden" role="alert">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <span id="loginAlertMsg">Silakan masukkan nama lengkap.</span>
+            </div>
+
+            <!-- Form Siswa -->
+            <form id="formStudentLogin" class="form-student-fields" onsubmit="return false;" novalidate>
+              <div class="input-control">
+                <div class="pill-input-box">
+                  <span class="pill-icon"><i class="fa-solid fa-user"></i></span>
+                  <input type="text" id="studentNameInput" placeholder="Nama Lengkap" autocomplete="name" required>
+                </div>
+              </div>
+
+              <div class="input-control">
+                <div class="pill-input-box">
+                  <span class="pill-icon"><i class="fa-solid fa-hashtag"></i></span>
+                  <input type="number" id="studentNumberInput" placeholder="Nomor Absen" min="1" max="99" required>
+                </div>
+              </div>
+
+              <button type="submit" id="btnStudentLogin" class="btn-masuk-pill btn-bounce">
+                <span id="btnMasukText">Masuk</span>
+                <i id="btnMasukIcon" class="fa-solid fa-arrow-right"></i>
+              </button>
+            </form>
+
+            <!-- Card Motivational Quote -->
+            <div class="card-quote-bar">
+              <span class="quote-star">⭐</span>
+              <p>“Langkah kecil hari ini, menuju prestasi besar esok hari!”</p>
+            </div>
+
+            <!-- Admin Teacher Link (Pak Adnan) - Premium Educator Portal Entry -->
+            <div class="teacher-portal-link">
+              <div class="teacher-portal-divider">
+                <span>atau</span>
+              </div>
+              <button type="button" id="btnOpenAdminModal" class="btn-teacher-portal" title="Akses Khusus Guru / Pendidik">
+                <span class="teacher-portal-badge"><i class="fa-solid fa-chalkboard-user"></i></span>
+                <div class="teacher-portal-text">
+                  <span class="portal-tag"><i class="fa-solid fa-shield-halved"></i> PORTAL PENDIDIK</span>
+                  <strong class="portal-title">Masuk Sebagai Guru (Pak Adnan) <i class="fa-solid fa-arrow-right-long portal-arrow"></i></strong>
+                </div>
+              </button>
+            </div>
+          </div>
+        </main>
+
+        <!-- Right Character: SD Girl -->
+        <aside class="character-slot slot-right" aria-label="Karakter Siswi SD">
+          <div class="character-figure girl-figure">
+            <img src="assets/elements/girl.png" alt="Karakter Siswi SD Perempuan" class="char-image img-girl">
+          </div>
+        </aside>
+      </div>
+
+      <!-- 3. BOTTOM DESK SURFACE (MEJA BELAJAR) WITH INDIVIDUAL DECORATIONS -->
+      <div class="wooden-desk-area" aria-label="Meja Belajar Interaktif">
+        <div class="desk-surface-shelf">
+          
+          <!-- Left Decor: Stack of 4 Books + Pencil -->
+          <div class="desk-decor-col decor-left">
+            <div class="books-stack-3d" title="Koleksi Buku Belajar">
+              <div class="book-layer book-blue"><span class="b-text">MATERI</span></div>
+              <div class="book-layer book-green"><span class="b-text">GAME</span></div>
+              <div class="book-layer book-red"><span class="b-text">LATIHAN SOAL</span></div>
+              <div class="book-layer book-yellow"><span class="b-text">PRESTASI</span></div>
+            </div>
+            <div class="yellow-pencil-decor" title="Pensil Belajar"></div>
+          </div>
+
+          <!-- Center Decor: Open Study Book (HTML+SVG+CSS Component, NO Screenshot!) -->
+          <div class="desk-decor-col decor-center">
+            <div class="open-workbook-component" title="Buku Terbuka Belajar Pecahan">
+              <!-- Left Page: Circle Fraction Diagram (8 parts) -->
+              <div class="workbook-page page-left-content">
+                <div class="pie-diagram-box">
+                  <svg viewBox="0 0 100 100" class="workbook-pie-svg">
+                    <!-- Base circle -->
+                    <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#0284c7" stroke-width="2.5" />
+                    <!-- 8 division spokes -->
+                    <line x1="50" y1="4" x2="50" y2="96" stroke="#0284c7" stroke-width="2" />
+                    <line x1="4" y1="50" x2="96" y2="50" stroke="#0284c7" stroke-width="2" />
+                    <line x1="17.5" y1="17.5" x2="82.5" y2="82.5" stroke="#0284c7" stroke-width="2" />
+                    <line x1="17.5" y1="82.5" x2="82.5" y2="17.5" stroke="#0284c7" stroke-width="2" />
+                    <!-- Shaded slices in blue representing 3/8 -->
+                    <path d="M50,50 L50,4 A46,46 0 0,1 96,50 Z" fill="#60a5fa" opacity="0.85" />
+                    <path d="M50,50 L96,50 A46,46 0 0,1 82.5,82.5 Z" fill="#93c5fd" opacity="0.85" />
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Spine Crease -->
+              <div class="workbook-spine"></div>
+
+              <!-- Right Page: Fraction 3/4 -->
+              <div class="workbook-page page-right-content">
+                <div class="workbook-fraction-display">
+                  <span class="wf-num">3</span>
+                  <span class="wf-divider"></span>
+                  <span class="wf-den">4</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Decor: 3D Geometry Pieces & Blackboard -->
+          <div class="desk-decor-col decor-right">
+            <!-- 3D Geometric Blocks -->
+            <div class="geom-blocks-group" title="Balok & Potongan Pecahan">
+              <div class="block-pyramid"></div>
+              <div class="block-pie green-slice"></div>
+              <div class="block-pie blue-slice"></div>
+              <div class="block-pie yellow-slice"></div>
+            </div>
+
+            <!-- Mini Blackboard (Papan Tulis Kecil) -->
+            <div class="mini-blackboard-component" title="Papan Tulis Contoh Pecahan">
+              <div class="blackboard-inner">
+                <div class="chalk-math-row">
+                  <span class="chalk-frac"><sup>1</sup>&frasl;<sub>4</sub></span> + 
+                  <span class="chalk-frac"><sup>1</sup>&frasl;<sub>4</sub></span> = 
+                  <span class="chalk-frac"><sup>2</sup>&frasl;<sub>4</sub></span>
+                </div>
+                <div class="chalk-math-row row-solution">
+                  <span class="chalk-frac"><sup>2</sup>&frasl;<sub>4</sub></span> = 
+                  <span class="chalk-frac highlight"><sup>1</sup>&frasl;<sub>2</sub></span>
+                </div>
+              </div>
+              <div class="chalkboard-frame-tray">
+                <span class="white-chalk-stick"></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 4. BOTTOM FOOTER BAR -->
+      <footer class="modular-footer-strip">
+        <div class="footer-segment left">Satu Pecahan Seribu Kesempatan</div>
+        <div class="footer-segment center">© 2026 | Belajar Pecahan | Bersama Kita Bisa!</div>
+        <div class="footer-segment right">Matematika untuk Kehidupan</div>
+      </footer>
+
+    </div>
+
+    <!-- MODAL PORTAL GURU (PAK ADNAN) - ULTRA LUXURY UI/UX -->
+    <div id="adminLoginModal" class="modal-backdrop admin-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+      <div class="admin-modal-container">
+        <!-- Floating decorative ambient glow lights -->
+        <div class="admin-modal-glow glow-1"></div>
+        <div class="admin-modal-glow glow-2"></div>
+
+        <div class="admin-modal-card" id="adminModalCard">
+          <!-- Top animated gradient shimmer accent bar -->
+          <div class="admin-modal-topbar"></div>
+
+          <!-- Close button in top corner -->
+          <button type="button" class="admin-modal-close-btn" id="btnAdminModalCloseIcon" title="Tutup Modal" aria-label="Tutup Modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <!-- Header Section -->
+          <div class="admin-modal-header">
+            <div class="admin-avatar-wrapper">
+              <div class="admin-avatar-halo"></div>
+              <div class="admin-avatar-circle">
+                <span class="admin-avatar-emoji">👨‍🏫</span>
+              </div>
+              <span class="admin-verified-badge" title="Akun Terverifikasi">
+                <i class="fa-solid fa-circle-check"></i> Guru SD
+              </span>
+            </div>
+
+            <div class="admin-header-text">
+              <div class="admin-portal-tag">
+                <i class="fa-solid fa-graduation-cap"></i> PORTAL PENDIDIK & ADMINISTRATOR
+              </div>
+              <h3 id="adminModalTitle" class="admin-modal-title">Pak Adnan Bahar, S.Pd.</h3>
+              <p class="admin-modal-desc">
+                Masuk untuk mengakses rekapitulasi nilai kelas, analisis capaian belajar, dan ekspor laporan.
+              </p>
+            </div>
+          </div>
+
+          <!-- Quick Fill Helper Banner (Satu Klik untuk Kemudahan Evaluasi) -->
+          <div class="admin-quick-fill-box">
+            <div class="quick-fill-info">
+              <span class="quick-fill-badge"><i class="fa-solid fa-key"></i> Akun Pengajar:</span>
+              <span class="quick-fill-code">adnanbahar@gmail.com</span>
+            </div>
+            <button type="button" id="btnAutoFillAdmin" class="btn-quick-fill" title="Klik untuk mengisi data secara otomatis">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Isi Otomatis</span>
+            </button>
+          </div>
+
+          <!-- Form Administrator -->
+          <form id="formAdminLoginModal" onsubmit="return false;" novalidate>
+            <!-- Email Input Field -->
+            <div class="admin-field-group">
+              <label for="modalAdminEmail" class="admin-field-label">
+                <span class="label-left"><i class="fa-solid fa-envelope"></i> Email Administrator</span>
+                <span class="label-hint">Kredensial Resmi Guru</span>
+              </label>
+              <div class="admin-input-wrapper">
+                <span class="admin-input-icon"><i class="fa-solid fa-at"></i></span>
+                <input 
+                  type="email" 
+                  id="modalAdminEmail" 
+                  class="admin-text-input" 
+                  placeholder="adnanbahar@gmail.com" 
+                  value="adnanbahar@gmail.com"
+                  autocomplete="username"
+                  required
+                >
+              </div>
+            </div>
+
+            <!-- Password Input Field -->
+            <div class="admin-field-group">
+              <label for="modalAdminPassword" class="admin-field-label">
+                <span class="label-left"><i class="fa-solid fa-lock"></i> Kata Sandi</span>
+                <span class="label-hint">Rahasia & Aman</span>
+              </label>
+              <div class="admin-input-wrapper">
+                <span class="admin-input-icon"><i class="fa-solid fa-key"></i></span>
+                <input 
+                  type="password" 
+                  id="modalAdminPassword" 
+                  class="admin-text-input" 
+                  placeholder="Masukkan kata sandi..." 
+                  value="adnan"
+                  autocomplete="current-password"
+                  required
+                >
+                <button type="button" id="btnToggleAdminPassword" class="admin-password-toggle" title="Lihat / Sembunyikan Sandi" aria-label="Toggle password visibility">
+                  <i class="fa-solid fa-eye" id="iconToggleAdminPassword"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Dynamic Alert Box -->
+            <div id="adminModalAlert" class="admin-alert-banner hidden" role="alert">
+              <i class="fa-solid fa-circle-exclamation alert-icon"></i>
+              <span id="adminModalAlertText">Email atau kata sandi salah. Silakan periksa kembali!</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="admin-modal-actions">
+              <button type="button" class="btn-admin-cancel" id="btnCloseAdminModal">
+                <i class="fa-solid fa-xmark"></i> Batal
+              </button>
+              <button type="submit" class="btn-admin-submit" id="btnSubmitAdminLogin">
+                <span id="adminSubmitText">Masuk Portal Admin</span>
+                <i id="adminSubmitIcon" class="fa-solid fa-arrow-right-to-bracket"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Security & Features Trust Badges Footer -->
+          <div class="admin-modal-footer-pills">
+            <span class="footer-pill"><i class="fa-solid fa-shield-halved"></i> Sesi Terenkripsi</span>
+            <span class="footer-pill"><i class="fa-solid fa-file-excel"></i> Rekap Excel & CSV</span>
+            <span class="footer-pill"><i class="fa-solid fa-chart-line"></i> Statistik Kelas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 2. HALAMAN MENU UTAMA (DASHBOARD)                        -->
+  <!-- ======================================================== -->
+  <section id="mainMenuSection" class="app-screen">
+    <div class="menu-scene-stage">
+      <!-- 1. LATAR BELAKANG SEKOLAH DASAR & DEKORASI AWAN/PECAHAN -->
+      <div class="menu-backdrop-layer">
+        <img src="assets/menu_school_bg.jpg" alt="Latar Belakang Sekolah Ceria" class="menu-school-bg-img">
+        <div class="menu-backdrop-tint"></div>
+
+        <!-- Dekorasi Pecahan Melayang (Floating Math Bubbles) -->
+        <div class="floating-frac-bubble frac-bubble-1" aria-hidden="true">
+          <span class="bubble-num">1</span>
+          <span class="bubble-bar"></span>
+          <span class="bubble-den">2</span>
+        </div>
+        <div class="floating-frac-bubble frac-bubble-2" aria-hidden="true">
+          <span class="bubble-num">3</span>
+          <span class="bubble-bar"></span>
+          <span class="bubble-den">4</span>
+        </div>
+        <div class="floating-frac-bubble frac-bubble-3" aria-hidden="true">
+          <span class="bubble-num">1</span>
+          <span class="bubble-bar"></span>
+          <span class="bubble-den">3</span>
+        </div>
+        <div class="floating-frac-bubble frac-bubble-4" aria-hidden="true">
+          <span class="bubble-num">2</span>
+          <span class="bubble-bar"></span>
+          <span class="bubble-den">5</span>
+        </div>
+        <div class="floating-frac-bubble frac-bubble-5" aria-hidden="true">
+          <span class="bubble-num">5</span>
+          <span class="bubble-bar"></span>
+          <span class="bubble-den">8</span>
+        </div>
+      </div>
+
+      <!-- 2. STATUS BAR PENGGUNA (MINIMALIS & ELEGAN DI BAGIAN ATAS) -->
+      <div class="menu-user-statusbar">
+        <div class="user-profile-badge">
+          <span class="user-avatar-badge" id="userDisplayAvatar">🚀</span>
+          <div class="user-badge-text">
+            <span class="greeting-sub" id="greetingRoleTag">Halo, Sahabat Pintar!</span>
+            <strong class="greeting-name" id="userDisplayName">Siswa SD</strong>
+          </div>
+        </div>
+
+        <div class="user-stat-pills">
+          <div class="stat-pill star-pill">
+            <span class="stat-icon">⭐</span>
+            <span class="stat-value" id="userDisplayStars">0</span>
+            <span class="stat-label">Bintang</span>
+          </div>
+          <div class="stat-pill coin-pill">
+            <span class="stat-icon">🪙</span>
+            <span class="stat-value" id="userDisplayCoins">0</span>
+            <span class="stat-label">Koin</span>
+          </div>
+          <button id="btnQuickLogout" class="btn-logout-icon" title="Keluar dari Aplikasi" aria-label="Keluar">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </button>
+          <button id="btnMenuAudioToggle" class="btn-audio-circle" title="Nyalakan/Matikan Suara" aria-label="Toggle Suara">
+            <i class="fa-solid fa-volume-high" id="menuAudioIcon"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. HEADER PAPAN KAYU "MENU UTAMA" DENGAN HANGING SIGNS -->
+      <header class="menu-wood-header-area">
+        <!-- Papan Gantung Kiri: Matematika Itu Menyenangkan! -->
+        <div class="wood-side-sign sign-left">
+          <div class="wood-rope-container">
+            <span class="wood-rope left"></span>
+            <span class="wood-rope right"></span>
+          </div>
+          <div class="wood-side-board">
+            <p class="side-sign-title">Matematika Itu<br>Menyenangkan!</p>
+            <div class="side-sign-emoji">😊</div>
+          </div>
+        </div>
+
+        <!-- Papan Kayu Utama Tengah: MENU UTAMA - Belajar Pecahan -->
+        <div class="wood-center-board-wrapper">
+          <!-- Cincin Gantungan Logam -->
+          <div class="wood-hanging-fixtures">
+            <div class="metal-ring-fixture fixture-left">
+              <div class="ring-bracket"></div>
+              <div class="ring-circle"></div>
+            </div>
+            <div class="metal-ring-fixture fixture-right">
+              <div class="ring-bracket"></div>
+              <div class="ring-circle"></div>
+            </div>
+          </div>
+
+          <div class="wood-main-board">
+            <!-- Paku/Baut Dekorasi Sudut Papan Kayu -->
+            <span class="wood-bolt bolt-top-left"></span>
+            <span class="wood-bolt bolt-top-right"></span>
+            <span class="wood-bolt bolt-bottom-left"></span>
+            <span class="wood-bolt bolt-bottom-right"></span>
+
+            <h1 class="wood-main-title">
+              <span class="title-3d-text" data-text="MENU UTAMA">MENU UTAMA</span>
+            </h1>
+
+            <!-- Sub-Plank Kayu Kecil: Belajar Pecahan -->
+            <div class="wood-sub-board">
+              <span class="sub-bolt left"></span>
+              <span class="wood-subtitle-text">Belajar Pecahan</span>
+              <span class="sub-bolt right"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Papan Gantung Kanan: Belajar, Bermain, Berkarya, Jadi Hebat! -->
+        <div class="wood-side-sign sign-right">
+          <div class="wood-rope-container">
+            <span class="wood-rope left"></span>
+            <span class="wood-rope right"></span>
+          </div>
+          <div class="wood-side-board">
+            <p class="side-sign-list">
+              <span>Belajar</span>
+              <span>Bermain</span>
+              <span>Berkarya</span>
+              <strong>Jadi Hebat!</strong>
+            </p>
+            <div class="side-sign-heart">❤️</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 4. ARENA UTAMA: KARAKTER SISWA & GRID 6 TOMBOL 3D GLOSSY -->
+      <main class="menu-main-stage">
+        <!-- Karakter Kiri: Siswa SD Laki-laki Melambaikan Tangan -->
+        <div class="character-pillar character-boy-wrapper" aria-label="Siswa Laki-laki">
+          <div class="character-inner-bounce">
+            <img src="assets/menu_boy.png?v=2" alt="Siswa SD Laki-laki Ceria" class="character-figure-img">
+            <div class="character-ground-shadow"></div>
+          </div>
+        </div>
+
+        <!-- GRID 2 BARIS x 3 KOLOM: 6 TOMBOL GLOSSY 3D INTERAKTIF -->
+        <div class="menu-buttons-3d-grid" role="group" aria-label="Pilihan Menu Utama">
+          
+          <!-- 1. MATERI (Hijau - Buku Terbuka) -->
+          <button type="button" class="btn-3d-glossy btn-menu-materi" id="menuBtnMateri" tabindex="0" aria-label="Buka Menu Materi">
+            <div class="btn-gloss-reflection"></div>
+            <div class="btn-content-wrap">
+              <div class="btn-icon-box">
+                <svg class="btn-svg-symbol" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Book Outer Blue Cover -->
+                  <path d="M50 20C42 14 26 12 12 16V66C26 62 42 64 50 70C58 64 74 62 88 66V16C74 12 58 14 50 20Z" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="3" stroke-linejoin="round"/>
+                  <!-- Book Pages Left -->
+                  <path d="M48 18C41 13 26 11 14 15V63C26 59 41 61 48 66V18Z" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+                  <!-- Book Pages Right -->
+                  <path d="M52 18C59 13 74 11 86 15V63C74 59 59 61 52 66V18Z" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+                  <!-- Center Spine -->
+                  <path d="M48 18C49.3 17 50.7 17 52 18V66C50.7 65 49.3 65 48 66V18Z" fill="#2563eb"/>
+                  <!-- Left Page Content Lines -->
+                  <rect x="20" y="26" width="18" height="3.5" rx="1.75" fill="#ef4444"/>
+                  <rect x="20" y="34" width="20" height="3.5" rx="1.75" fill="#3b82f6"/>
+                  <rect x="20" y="42" width="16" height="3.5" rx="1.75" fill="#10b981"/>
+                  <!-- Right Page Content Lines -->
+                  <rect x="62" y="26" width="18" height="3.5" rx="1.75" fill="#f59e0b"/>
+                  <rect x="60" y="34" width="20" height="3.5" rx="1.75" fill="#ef4444"/>
+                  <rect x="64" y="42" width="16" height="3.5" rx="1.75" fill="#3b82f6"/>
+                </svg>
+              </div>
+              <span class="btn-3d-text">MATERI</span>
+            </div>
+            <div class="btn-shine-sweep"></div>
+          </button>
+
+          <!-- 2. GAME (Orange - Game Controller) -->
+          <button type="button" class="btn-3d-glossy btn-menu-game" id="menuBtnGame" tabindex="0" aria-label="Buka Menu Game">
+            <div class="btn-gloss-reflection"></div>
+            <div class="btn-content-wrap">
+              <div class="btn-icon-box">
+                <svg class="btn-svg-symbol" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Controller Body -->
+                  <path d="M26 16C16 16 10 24 10 38C10 52 17 62 27 60C33 59 38 52 44 48H56C62 52 67 59 73 60C83 62 90 52 90 38C90 24 84 16 74 16C62 16 56 22 50 22C44 22 38 16 26 16Z" fill="#1e293b" stroke="#0f172a" stroke-width="3"/>
+                  <path d="M26 18C18 18 12 25 12 38C12 48 17 57 26 56C30 55 35 50 41 46H59C65 50 70 55 74 56C83 57 88 48 88 38C88 25 82 18 74 18C63 18 57 24 50 24C43 24 37 18 26 18Z" fill="#334155"/>
+                  <!-- Yellow D-Pad Left -->
+                  <path d="M26 28V46M17 37H35" stroke="#facc15" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="26" cy="37" r="2.5" fill="#ca8a04"/>
+                  <!-- 4 Action Buttons Right -->
+                  <circle cx="74" cy="28" r="4.5" fill="#ef4444"/>
+                  <circle cx="82" cy="36" r="4.5" fill="#3b82f6"/>
+                  <circle cx="74" cy="44" r="4.5" fill="#10b981"/>
+                  <circle cx="66" cy="36" r="4.5" fill="#facc15"/>
+                  <!-- Indicators -->
+                  <rect x="44" y="32" width="4" height="2" rx="1" fill="#94a3b8"/>
+                  <rect x="52" y="32" width="4" height="2" rx="1" fill="#94a3b8"/>
+                </svg>
+              </div>
+              <span class="btn-3d-text">GAME</span>
+            </div>
+            <div class="btn-shine-sweep"></div>
+          </button>
+
+          <!-- 3. QUIZ (Biru - Clipboard Checklist) -->
+          <button type="button" class="btn-3d-glossy btn-menu-quiz" id="menuBtnKuis" tabindex="0" aria-label="Buka Menu Quiz">
+            <div class="btn-gloss-reflection"></div>
+            <div class="btn-content-wrap">
+              <div class="btn-icon-box">
+                <svg class="btn-svg-symbol" viewBox="0 0 80 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Clipboard Body -->
+                  <rect x="10" y="16" width="60" height="74" rx="10" fill="#ffffff" stroke="#93c5fd" stroke-width="3"/>
+                  <!-- Top Metal Clamp -->
+                  <path d="M26 14C26 9.5 29.5 6 34 6H46C50.5 6 54 9.5 54 14V18H26V14Z" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+                  <circle cx="40" cy="11" r="2.5" fill="#e0f2fe"/>
+                  <!-- Checklist 1 -->
+                  <rect x="20" y="30" width="12" height="12" rx="3" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
+                  <path d="M23 36L25 38L29 33" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="36" y="34" width="26" height="4" rx="2" fill="#94a3b8"/>
+                  <!-- Checklist 2 (Green Checked) -->
+                  <rect x="20" y="48" width="12" height="12" rx="3" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+                  <path d="M23 54L25 57L30 51" stroke="#16a34a" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="36" y="52" width="22" height="4" rx="2" fill="#94a3b8"/>
+                  <!-- Checklist 3 -->
+                  <rect x="20" y="66" width="12" height="12" rx="3" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+                  <rect x="36" y="70" width="24" height="4" rx="2" fill="#cbd5e1"/>
+                </svg>
+              </div>
+              <span class="btn-3d-text">QUIZ</span>
+            </div>
+            <div class="btn-shine-sweep"></div>
+          </button>
+
+          <!-- 4. PETUNJUK (Ungu - Papan Petunjuk Arah) -->
+          <button type="button" class="btn-3d-glossy btn-menu-petunjuk" id="menuBtnPetunjuk" tabindex="0" aria-label="Buka Menu Petunjuk">
+            <div class="btn-gloss-reflection"></div>
+            <div class="btn-content-wrap">
+              <div class="btn-icon-box">
+                <svg class="btn-svg-symbol" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Tiang Kayu -->
+                  <rect x="41" y="10" width="8" height="74" rx="3" fill="#78350f" stroke="#451a03" stroke-width="2"/>
+                  <!-- Panah Kuning Kanan -->
+                  <path d="M22 20H60L74 29L60 38H22C20 38 18 36 18 34V24C18 22 20 20 22 20Z" fill="#facc15" stroke="#a16207" stroke-width="3"/>
+                  <circle cx="45" cy="29" r="2" fill="#713f12"/>
+                  <!-- Panah Hijau Kiri -->
+                  <path d="M68 44H30L16 53L30 62H68C70 62 72 60 72 58V48C72 46 70 44 68 44Z" fill="#22c55e" stroke="#15803d" stroke-width="3"/>
+                  <circle cx="45" cy="53" r="2" fill="#14532d"/>
+                  <path d="M32 84C35 78 40 76 45 76C50 76 55 78 58 84H32Z" fill="#16a34a"/>
+                </svg>
+              </div>
+              <span class="btn-3d-text">PETUNJUK</span>
+            </div>
+            <div class="btn-shine-sweep"></div>
+          </button>
+
+          <!-- 5. HASIL (Pink - Piala Emas Juara) -->
+          <button type="button" class="btn-3d-glossy btn-menu-hasil" id="menuBtnHasil" tabindex="0" aria-label="Buka Menu Hasil">
+            <div class="btn-gloss-reflection"></div>
+            <div class="btn-content-wrap">
+              <div class="btn-icon-box">
+                <svg class="btn-svg-symbol" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Gagang Piala -->
+                  <path d="M27 24C17 24 13 32 15 42C17 49 24 53 31 51" stroke="#ca8a04" stroke-width="5" stroke-linecap="round"/>
+                  <path d="M63 24C73 24 77 32 75 42C73 49 66 53 59 51" stroke="#ca8a04" stroke-width="5" stroke-linecap="round"/>
+                  <!-- Badan Piala -->
+                  <path d="M25 18H65V38C65 49 56 58 45 58C34 58 25 49 25 38V18Z" fill="#eab308" stroke="#a16207" stroke-width="3"/>
+                  <!-- Bibir Piala -->
+                  <ellipse cx="45" cy="18" rx="20" ry="4" fill="#fef08a" stroke="#ca8a04" stroke-width="2"/>
+                  <!-- Bintang Emas Putih -->
+                  <path d="M45 28L47 34H53L48 38L50 44L45 40L40 44L42 38L37 34H43L45 28Z" fill="#ffffff" stroke="#ca8a04" stroke-width="1.2"/>
+                  <!-- Tangkai & Dudukan -->
+                  <rect x="41" y="58" width="8" height="12" fill="#ca8a04"/>
+                  <path d="M33 70H57L61 80H29L33 70Z" fill="#a16207" stroke="#713f12" stroke-width="2"/>
+                  <rect x="27" y="78" width="36" height="4" rx="2" fill="#ca8a04"/>
+                </svg>
+              </div>
+              <span class="btn-3d-text">HASIL</span>
+            </div>
+            <div class="btn-shine-sweep"></div>
+          </button>
+
+          <!-- 6. KELUAR (Merah - Pintu Keluar Terbuka) -->
+          <button type="button" class="btn-3d-glossy btn-menu-keluar" id="menuBtnKeluar" tabindex="0" aria-label="Keluar Aplikasi">
+            <div class="btn-gloss-reflection"></div>
+            <div class="btn-content-wrap">
+              <div class="btn-icon-box">
+                <svg class="btn-svg-symbol" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Kusen Pintu -->
+                  <rect x="20" y="16" width="38" height="62" rx="4" fill="#451a03" stroke="#291002" stroke-width="3"/>
+                  <rect x="25" y="21" width="28" height="52" fill="#fde047"/>
+                  <!-- Daun Pintu Kayu Terbuka -->
+                  <path d="M25 21L45 16V78L25 73V21Z" fill="#92400e" stroke="#713f12" stroke-width="2.5"/>
+                  <circle cx="41" cy="48" r="2.5" fill="#facc15"/>
+                  <!-- Panah 3D Kuning Meluncur ke Kanan -->
+                  <path d="M40 42H58V32L78 48L58 64V54H40V42Z" fill="#facc15" stroke="#ca8a04" stroke-width="3" stroke-linejoin="round"/>
+                  <path d="M40 44H58V35L75 48L58 61V52H40V44Z" fill="#fde047"/>
+                </svg>
+              </div>
+              <span class="btn-3d-text">KELUAR</span>
+            </div>
+            <div class="btn-shine-sweep"></div>
+          </button>
+
+        </div>
+
+        <!-- Karakter Kanan: Siswa SD Perempuan Menunjuk Menu -->
+        <div class="character-pillar character-girl-wrapper" aria-label="Siswa Perempuan">
+          <div class="character-inner-bounce girl-bounce">
+            <img src="assets/menu_girl.png?v=2" alt="Siswa SD Perempuan Ceria" class="character-figure-img">
+            <div class="character-ground-shadow"></div>
+          </div>
+        </div>
+      </main>
+
+      <!-- 5. DEKORASI BAWAH: TUMPUKAN BUKU, SLOGAN PAPAN KAYU, & PAPAN PETIKAN -->
+      <footer class="menu-bottom-decor-bar">
+        <!-- Tumpukan Buku Warna-Warni (Kiri Bawah) -->
+        <div class="books-stack-corner" aria-label="Ayo Belajar Pecahan Bersama">
+          <div class="book-layer book-red">
+            <span class="book-badge">Ayo</span>
+          </div>
+          <div class="book-layer book-green">
+            <span class="book-badge">Belajar</span>
+          </div>
+          <div class="book-layer book-blue">
+            <span class="book-badge">Pecahan</span>
+          </div>
+          <div class="book-layer book-orange">
+            <span class="book-badge">Bersama!</span>
+          </div>
+        </div>
+
+        <!-- Slogan Papan Kayu Tengah Bawah -->
+        <div class="center-slogan-plank">
+          <div class="slogan-star-icon" aria-hidden="true">⭐</div>
+          <p class="slogan-quote-text">"Langkah kecil hari ini, prestasi besar nanti!"</p>
+        </div>
+
+        <!-- Papan Tanda Rumput Kanan Bawah -->
+        <div class="right-signpost-board">
+          <div class="signpost-wood-plate">
+            <p class="signpost-quote">Setiap<br>Pecahan<br>Memiliki Makna</p>
+            <span class="signpost-heart">❤️</span>
+          </div>
+          <div class="signpost-ground-stake"></div>
+        </div>
+      </footer>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 3. HALAMAN MODUL MATERI                                  -->
+  <!-- ======================================================== -->
+  <section id="materiSection" class="app-screen">
+    <div class="container">
+      <div class="screen-header">
+        <button class="btn-back btnBackToMain" title="Kembali ke Menu Utama">
+          <i class="fa-solid fa-arrow-left"></i> <span>Menu Utama</span>
+        </button>
+        <div class="screen-title-group">
+          <h2 class="screen-title"><span class="badge-icon">📚</span> Modul Belajar Pecahan</h2>
+          <p class="screen-subtitle">Eksplorasi konsep matematika dengan visual interaktif</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs Materi -->
+      <div class="materi-tabs">
+        <button class="materi-tab-btn active" data-tab="materi1">
+          <span class="tab-num">1</span> 🍕 Mengenal Pecahan
+        </button>
+        <button class="materi-tab-btn" data-tab="materi2">
+          <span class="tab-num">2</span> 📦 Jenis &amp; Konversi
+        </button>
+        <button class="materi-tab-btn" data-tab="materi3">
+          <span class="tab-num">3</span> ⚖️ Pecahan Senilai
+        </button>
+        <button class="materi-tab-btn" data-tab="materi4">
+          <span class="tab-num">4</span> 🔍 Membandingkan
+        </button>
+        <button class="materi-tab-btn" data-tab="materiVideo">
+          <span class="tab-num">5</span> 🎬 Video Pembelajaran
+        </button>
+        <button class="materi-tab-btn" data-tab="materi5">
+          <span class="tab-num">6</span> 🧮 Operasi &amp; Soal Cerita
+        </button>
+      </div>
+
+      <!-- Materi Content Area -->
+      <div class="materi-content-card">
+        
+        <!-- ======================================================== -->
+        <!-- SUB-MATERI 1: Mengenal Pecahan & Simulator Visual        -->
+        <!-- ======================================================== -->
+        <div class="materi-panel active" id="panelMateri1">
+          <div class="materi-article">
+            <div class="materi-text-col">
+              <span class="topic-tag">Bab 1 &bull; Konsep Dasar &amp; Pengenalan</span>
+              <h3>Apa itu Pecahan? Petualangan Membagi Rata!</h3>
+              <p>Kata <b>pecahan</b> berasal dari kata <em>"pecah"</em>. Dalam matematika, pecahan adalah <b>bagian dari suatu benda atau kesatuan utuh yang dibagi menjadi beberapa bagian sama besar (adil dan rata)</b>.</p>
+              
+              <!-- Aturan Emas Pecahan -->
+              <div class="golden-rule-box">
+                <div class="gr-header"><i class="fa-solid fa-crown"></i> Aturan Emas Pecahan: Potongan Harus SAMA BESAR!</div>
+                <div class="gr-grid">
+                  <div class="gr-card valid">
+                    <div class="gr-icon">✅</div>
+                    <strong>Pecahan Sah</strong>
+                    <p>1 loyang dipotong 4 bagian <b>identik sama besar</b>. Tiap potong adalah pecahan <b>1/4</b>.</p>
+                  </div>
+                  <div class="gr-card invalid">
+                    <div class="gr-icon">❌</div>
+                    <strong>Bukan Pecahan</strong>
+                    <p>1 loyang dipotong 1 besar dan 3 kecil. Karena ukurannya <b>tidak sama</b>, ini <b>bukan</b> pecahan 1/4!</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Anatomi Bentuk Pecahan -->
+              <div class="fraction-anatomy-card">
+                <h4><i class="fa-solid fa-shapes"></i> Struktur Anatomi Bentuk Pecahan:</h4>
+                <div class="fraction-formula-display">
+                  <div class="anatomy-formula">
+                    <span class="num-highlight">a</span>
+                    <span class="fraction-divider"></span>
+                    <span class="den-highlight">b</span>
+                  </div>
+                  <div class="anatomy-explanation">
+                    <div class="anatomy-row">
+                      <span class="num-tag">a = Pembilang (Numerator)</span>
+                      <span class="desc">Terletak di <b>ATAS awan</b> &mdash; menunjukkan berapa banyak bagian yang diambil, diarsir, diwarnai, atau dimakan.</span>
+                    </div>
+                    <div class="anatomy-row">
+                      <span class="den-tag">b = Penyebut (Denominator)</span>
+                      <span class="desc">Terletak di <b>BAWAH bumi</b> &mdash; menunjukkan jumlah <b>seluruh potongan sama besar</b> dalam satu kesatuan utuh.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="vinculum-note">
+                  <i class="fa-solid fa-info-circle"></i> Garis pemisah mendatar di tengah disebut <b>Vinculum (Garis Pecahan)</b> yang melambangkan operasi <b>Bagi (&divide;)</b>. Jadi, <b>1/2 sama artinya dengan 1 &divide; 2</b>.
+                </div>
+              </div>
+
+              <!-- Panduan Membaca Pecahan -->
+              <div class="reading-card">
+                <h4><i class="fa-solid fa-bullhorn"></i> Cara Membaca Pecahan yang Tepat:</h4>
+                <div class="reading-chips-grid">
+                  <div class="read-chip"><strong>1/2</strong> &rarr; Seperdua atau Setengah</div>
+                  <div class="read-chip"><strong>1/3</strong> &rarr; Sepertiga</div>
+                  <div class="read-chip"><strong>1/4</strong> &rarr; Seperempat</div>
+                  <div class="read-chip"><strong>2/3</strong> &rarr; Dua per tiga</div>
+                  <div class="read-chip"><strong>3/4</strong> &rarr; Tiga per empat</div>
+                  <div class="read-chip"><strong>5/8</strong> &rarr; Lima per delapan</div>
+                </div>
+              </div>
+
+              <!-- Benda Konkret Sehari-Hari -->
+              <div class="real-life-section">
+                <h4><i class="fa-solid fa-basket-shopping"></i> Contoh Nyata di Sekitar Kita:</h4>
+                <div class="real-life-grid">
+                  <div class="rl-item">
+                    <span class="rl-emoji">🍕</span>
+                    <strong>Pizza</strong>
+                    <small>1 loyang dipotong 8 potong &rarr; 1 potong = 1/8</small>
+                  </div>
+                  <div class="rl-item">
+                    <span class="rl-emoji">🍫</span>
+                    <strong>Cokelat</strong>
+                    <small>1 batang berisi 6 kotak &rarr; 2 kotak = 2/6 = 1/3</small>
+                  </div>
+                  <div class="rl-item">
+                    <span class="rl-emoji">🎂</span>
+                    <strong>Kue Tart</strong>
+                    <small>1 kue dipotong 12 &rarr; 3 potong = 3/12 = 1/4</small>
+                  </div>
+                  <div class="rl-item">
+                    <span class="rl-emoji">🍎</span>
+                    <strong>Apel</strong>
+                    <small>1 apel dibelah dua rata &rarr; 1 belahan = 1/2</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fakta Sejarah -->
+              <div class="trivia-box">
+                <span class="trivia-icon">💡</span>
+                <div>
+                  <strong>Tahukah Kamu?</strong> Garis mendatar pada pecahan pertama kali dicetuskan oleh ilmuwan muslim terkemuka asal Maroko bernama <b>Abu Bakr al-Hassar</b> pada abad ke-12, lalu disebarkan ke Eropa oleh <b>Fibonacci</b>!
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Interactive Fraction Visualizer (Pizza & Chocolate) -->
+            <div class="simulator-col">
+              <div class="simulator-card">
+                <div class="sim-header">
+                  <div class="sim-title"><i class="fa-solid fa-sliders"></i> Laboratorium Visual Pecahan</div>
+                  <div class="sim-mode-toggle">
+                    <button class="sim-type-btn active" id="simModePizza"><i class="fa-solid fa-pizza-slice"></i> Pizza</button>
+                    <button class="sim-type-btn" id="simModeBar"><i class="fa-solid fa-bars"></i> Balok Cokelat</button>
+                  </div>
+                </div>
+
+                <!-- Visual Output Container -->
+                <div class="sim-visual-display">
+                  <div id="pizzaVisualContainer" class="visual-wrapper">
+                    <!-- SVG Pizza rendered dynamically via JS -->
+                    <svg id="pizzaSvg" viewBox="-120 -120 240 240" class="interactive-svg"></svg>
+                  </div>
+                  <div id="barVisualContainer" class="visual-wrapper hidden">
+                    <div id="fractionBarStrip" class="fraction-strip"></div>
+                  </div>
+                </div>
+
+                <!-- Live Value Display -->
+                <div class="sim-fraction-badge">
+                  <span class="sim-badge-label">Nilai Pecahan:</span>
+                  <div class="badge-fraction">
+                    <span id="simValNum">3</span>
+                    <span class="badge-bar"></span>
+                    <span id="simValDen">4</span>
+                  </div>
+                  <span class="sim-badge-text" id="simBadgeReadText">"Tiga per Empat" (75%)</span>
+                </div>
+
+                <!-- Controls -->
+                <div class="sim-controls">
+                  <div class="control-row">
+                    <label>Penyebut (Total Potongan): <strong id="lblPenyebut">4</strong></label>
+                    <div class="slider-with-btns">
+                      <button type="button" class="btn-step" id="btnDecDen">-</button>
+                      <input type="range" id="sliderPenyebut" min="2" max="12" value="4">
+                      <button type="button" class="btn-step" id="btnIncDen">+</button>
+                    </div>
+                  </div>
+                  <div class="control-row">
+                    <label>Pembilang (Potongan Diambil): <strong id="lblPembilang">3</strong></label>
+                    <div class="slider-with-btns">
+                      <button type="button" class="btn-step" id="btnDecNum">-</button>
+                      <input type="range" id="sliderPembilang" min="0" max="4" value="3">
+                      <button type="button" class="btn-step" id="btnIncNum">+</button>
+                    </div>
+                  </div>
+                  <p class="sim-tip"><i class="fa-solid fa-hand-pointer"></i> <em>Tip: Kamu bisa mengklik langsung setiap potongan pizza atau balok di atas untuk mengambil atau mengembalikan bagiannya!</em></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- SUB-MATERI 2: Jenis-Jenis Pecahan & Konversi             -->
+        <!-- ======================================================== -->
+        <div class="materi-panel" id="panelMateri2">
+          <div class="materi-article full-article">
+            <span class="topic-tag">Bab 2 &bull; Ragam Bentuk &amp; Konversi</span>
+            <h3>4 Jenis Pecahan dan Cara Mengubah Bentuknya</h3>
+            <p class="article-lead">Dalam matematika dan kehidupan sehari-hari, pecahan dapat tampil dalam 4 bentuk yang berbeda namun saling berhubungan erat:</p>
+
+            <div class="jenis-pecahan-grid">
+              <!-- 1. Pecahan Biasa -->
+              <div class="jenis-card">
+                <div class="jenis-badge badge-blue"><i class="fa-solid fa-cubes"></i> 1. Pecahan Biasa</div>
+                <div class="jenis-visual-sample">
+                  <span class="sample-fraction"><sup>2</sup>&frasl;<sub>5</sub></span>
+                  <span class="sample-label">dan</span>
+                  <span class="sample-fraction"><sup>7</sup>&frasl;<sub>3</sub></span>
+                </div>
+                <p>Pecahan yang hanya terdiri dari angka pembilang (atas) dan penyebut (bawah).</p>
+                <div class="sub-jenis-box">
+                  <div class="sub-item">
+                    <strong>Pecahan Murni:</strong> Pembilang <b>lebih kecil</b> dari penyebut (nilai &lt; 1).<br>
+                    <small>Contoh: 1/2, 2/3, 5/8 (Ukuran wajar).</small>
+                  </div>
+                  <div class="sub-item">
+                    <strong>Pecahan Tidak Murni:</strong> Pembilang <b>sama atau lebih besar</b> dari penyebut (nilai &ge; 1).<br>
+                    <small>Contoh: 5/3, 7/4, 9/2 (Bisa diubah ke pecahan campuran!).</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. Pecahan Campuran -->
+              <div class="jenis-card">
+                <div class="jenis-badge badge-orange"><i class="fa-solid fa-layer-group"></i> 2. Pecahan Campuran</div>
+                <div class="jenis-visual-sample">
+                  <span class="sample-mixed"><span class="whole">2</span><span class="frac"><sup>3</sup>&frasl;<sub>4</sub></span></span>
+                  <span class="sample-label">= 2 Utuh + 3/4</span>
+                </div>
+                <p>Gabungan antara <b>bilangan bulat utuh</b> dengan <b>pecahan murni</b>.</p>
+                
+                <!-- Rumus KABAT -->
+                <div class="formula-box">
+                  <strong><i class="fa-solid fa-wand-magic-sparkles"></i> Rumus KABAT (Kali Bawah, Tambah Atas):</strong><br>
+                  Mengubah Campuran &rarr; Biasa:<br>
+                  <code>2 3/4 = (2 &times; 4 + 3) / 4 = (8 + 3) / 4 = 11/4</code>
+                </div>
+
+                <div class="formula-box" style="margin-top:8px; background:#eff6ff; border-color:#bfdbfe; color:#1e40af;">
+                  <strong>Mengubah Biasa &rarr; Campuran (Bagi &amp; Sisa):</strong><br>
+                  <code>11/4 = 11 &divide; 4 = 2 sisa 3 &rarr; 2 3/4</code>
+                </div>
+              </div>
+
+              <!-- 3. Pecahan Desimal -->
+              <div class="jenis-card">
+                <div class="jenis-badge badge-green"><i class="fa-solid fa-calculator"></i> 3. Pecahan Desimal</div>
+                <div class="jenis-visual-sample">
+                  <span class="sample-number">0,5</span>
+                  <span class="sample-label">&amp;</span>
+                  <span class="sample-number">0,75</span>
+                </div>
+                <p>Pecahan yang penyebutnya merupakan kelipatan 10 (10, 100, 1.000, dst.) dan ditulis dengan <b>tanda koma (,)</b>.</p>
+                <ul class="desimal-list">
+                  <li><b>Persepuluhan (1 angka di belakang koma):</b><br> <code>1/10 = 0,1</code> &bull; <code>5/10 = 0,5</code></li>
+                  <li><b>Perseratusan (2 angka di belakang koma):</b><br> <code>25/100 = 0,25</code> &bull; <code>75/100 = 0,75</code></li>
+                </ul>
+                <div class="formula-box" style="background:#f0fdf4; border-color:#bbf7d0; color:#166534;">
+                  <strong>Trik Cepat Ubah ke Desimal:</strong> Jadikan penyebutnya bernilai 10 atau 100!<br>
+                  <code>3/4 &times; 25/25 = 75/100 = 0,75</code>
+                </div>
+              </div>
+
+              <!-- 4. Persen (%) -->
+              <div class="jenis-card">
+                <div class="jenis-badge badge-pink"><i class="fa-solid fa-percent"></i> 4. Persen (%)</div>
+                <div class="jenis-visual-sample">
+                  <span class="sample-number" style="color:#db2777;">50%</span>
+                  <span class="sample-label">&amp;</span>
+                  <span class="sample-number" style="color:#db2777;">75%</span>
+                </div>
+                <p>Persen berasal dari kata <em>"per-centum"</em> yang berarti <b>"Per Seratus"</b> dengan lambang <b>%</b>.</p>
+                <div class="persen-examples">
+                  <div class="pe-item">🔋 Baterai HP <b>75%</b> = 75/100 daya terisi</div>
+                  <div class="pe-item">🏷️ Diskon <b>50%</b> = 50/100 = 1/2 (Bayar Setengah Harga!)</div>
+                  <div class="pe-item">💯 Nilai Ujian <b>100%</b> = 100/100 = 1 (Sempurna / Benar Semua!)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabel Konversi Ajaib Pecahan Istimewa -->
+            <div class="konversi-section">
+              <h4><i class="fa-solid fa-star" style="color:#eab308;"></i> Tabel Konversi Ajaib (Wajib Dihafal Siswa SD):</h4>
+              <p>Pecahan-pecahan berikut sangat sering muncul dalam ujian dan kuis:</p>
+              <div class="table-responsive">
+                <table class="tabel-ajaib">
+                  <thead>
+                    <tr>
+                      <th>Pecahan Biasa</th>
+                      <th>Pecahan Desimal</th>
+                      <th>Persen (%)</th>
+                      <th>Makna Sehari-Hari</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="tb-frac">1/2</span></td>
+                      <td><strong>0,5</strong></td>
+                      <td><span class="tb-persen">50%</span></td>
+                      <td>Setengah bagian loyang</td>
+                    </tr>
+                    <tr>
+                      <td><span class="tb-frac">1/4</span></td>
+                      <td><strong>0,25</strong></td>
+                      <td><span class="tb-persen">25%</span></td>
+                      <td>Seperempat bagian</td>
+                    </tr>
+                    <tr>
+                      <td><span class="tb-frac">3/4</span></td>
+                      <td><strong>0,75</strong></td>
+                      <td><span class="tb-persen">75%</span></td>
+                      <td>Tiga perempat bagian</td>
+                    </tr>
+                    <tr>
+                      <td><span class="tb-frac">1/5</span></td>
+                      <td><strong>0,2</strong></td>
+                      <td><span class="tb-persen">20%</span></td>
+                      <td>Seperlima bagian</td>
+                    </tr>
+                    <tr>
+                      <td><span class="tb-frac">2/5</span></td>
+                      <td><strong>0,4</strong></td>
+                      <td><span class="tb-persen">40%</span></td>
+                      <td>Dua perlima bagian</td>
+                    </tr>
+                    <tr>
+                      <td><span class="tb-frac">1/10</span></td>
+                      <td><strong>0,1</strong></td>
+                      <td><span class="tb-persen">10%</span></td>
+                      <td>Sepersepuluh bagian</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Mini Interactive Converter -->
+            <div class="mini-tool-card">
+              <div class="mt-header">
+                <i class="fa-solid fa-calculator"></i> <strong>Kalkulator Mini Konversi Pecahan:</strong>
+              </div>
+              <p>Masukkan angka pembilang dan penyebut untuk melihat hasil desimal dan persennya secara instan:</p>
+              <div class="mini-calc-row">
+                <div class="mc-inputs">
+                  <input type="number" id="calcInputNum" value="1" min="1" max="99" placeholder="Pembilang" aria-label="Pembilang">
+                  <span class="mc-slash">/</span>
+                  <input type="number" id="calcInputDen" value="4" min="1" max="100" placeholder="Penyebut" aria-label="Penyebut">
+                  <button type="button" class="btn btn-primary btn-sm" id="btnRunMiniConvert">Ubah Bentuk</button>
+                </div>
+                <div class="mc-result-box" id="calcResultDisplay">
+                  <span>Desimal: <strong>0,25</strong></span> &bull; 
+                  <span>Persen: <strong>25%</strong></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- SUB-MATERI 3: Pecahan Senilai & Sederhana                -->
+        <!-- ======================================================== -->
+        <div class="materi-panel" id="panelMateri3">
+          <div class="materi-article full-article">
+            <span class="topic-tag">Bab 3 &bull; Kesetaraan &amp; Bentuk Sederhana</span>
+            <h3>Memahami Pecahan Senilai (Ekuivalen) &amp; Cara Menyederhanakan</h3>
+            <p class="article-lead"><b>Pecahan senilai</b> adalah pecahan-pecahan yang angka pembilang dan penyebutnya berbeda, namun memiliki <b>luas daerah atau nilai yang SAMA PERSIS</b>.</p>
+
+            <!-- Visual Bar Comparison -->
+            <div class="senilai-visual-box">
+              <h4><i class="fa-solid fa-chart-simple"></i> Bukti Visual: Perhatikan Ketiga Balok Berikut</h4>
+              <p>Meskipun jumlah potongan balok di bawah ini berbeda, perhatikan bahwa panjang <b>daerah hijau yang diarsir berukuran SAMA PERSIS</b>:</p>
+              
+              <div class="senilai-bars">
+                <div class="senilai-row">
+                  <span class="bar-label">1/2</span>
+                  <div class="bar-track">
+                    <div class="bar-seg active" style="width: 50%;">1/2</div>
+                    <div class="bar-seg" style="width: 50%;">1/2</div>
+                  </div>
+                  <span class="senilai-tag tag-green">Luas: 50%</span>
+                </div>
+
+                <div class="senilai-row">
+                  <span class="bar-label">2/4</span>
+                  <div class="bar-track">
+                    <div class="bar-seg active" style="width: 25%;">1/4</div>
+                    <div class="bar-seg active" style="width: 25%;">1/4</div>
+                    <div class="bar-seg" style="width: 25%;">1/4</div>
+                    <div class="bar-seg" style="width: 25%;">1/4</div>
+                  </div>
+                  <span class="senilai-tag tag-green">Luas: 50%</span>
+                </div>
+
+                <div class="senilai-row">
+                  <span class="bar-label">4/8</span>
+                  <div class="bar-track">
+                    <div class="bar-seg active" style="width: 12.5%;">1/8</div>
+                    <div class="bar-seg active" style="width: 12.5%;">1/8</div>
+                    <div class="bar-seg active" style="width: 12.5%;">1/8</div>
+                    <div class="bar-seg active" style="width: 12.5%;">1/8</div>
+                    <div class="bar-seg" style="width: 12.5%;">1/8</div>
+                    <div class="bar-seg" style="width: 12.5%;">1/8</div>
+                    <div class="bar-seg" style="width: 12.5%;">1/8</div>
+                    <div class="bar-seg" style="width: 12.5%;">1/8</div>
+                  </div>
+                  <span class="senilai-tag tag-green">Luas: 50%</span>
+                </div>
+              </div>
+
+              <!-- Kesimpulan Senilai -->
+              <div class="senilai-equation">
+                <span>1/2</span> = <span>2/4</span> = <span>4/8</span> = <span>8/16</span>
+              </div>
+            </div>
+
+            <!-- Cara Menemukan Pecahan Senilai -->
+            <div class="senilai-rules-grid">
+              <div class="rule-card multiply">
+                <div class="rc-header"><i class="fa-solid fa-xmark"></i> 1. Metode Perkalian</div>
+                <p>Kalikan pembilang dan penyebut dengan <b>angka yang sama</b> (selain 0):</p>
+                <div class="rc-math">
+                  <code>1/3 &times; 2/2 = 2/6</code><br>
+                  <code>1/3 &times; 3/3 = 3/9</code><br>
+                  <code>1/3 &times; 4/4 = 4/12</code>
+                </div>
+              </div>
+
+              <div class="rule-card divide">
+                <div class="rc-header"><i class="fa-solid fa-divide"></i> 2. Metode Pembagian</div>
+                <p>Bagi pembilang dan penyebut dengan <b>angka yang sama</b>:</p>
+                <div class="rc-math">
+                  <code>4/8 &divide; 2/2 = 2/4</code><br>
+                  <code>4/8 &divide; 4/4 = 1/2</code><br>
+                  <code>6/18 &divide; 6/6 = 1/3</code>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cara Menyederhanakan Pecahan -->
+            <div class="sederhana-box">
+              <h4><i class="fa-solid fa-compress"></i> Cara Menyederhanakan Pecahan ke Bentuk Paling Sederhana:</h4>
+              <p>Pecahan berada dalam <b>bentuk paling sederhana</b> apabila pembilang dan penyebutnya <b>tidak dapat dibagi lagi</b> oleh angka yang sama kecuali angka 1 (FPB = 1).</p>
+              
+              <div class="step-breakdown-card">
+                <div class="sb-title">Contoh: Sederhanakan pecahan <strong>12/18</strong></div>
+                <div class="sb-steps">
+                  <div class="sb-step">
+                    <span class="sb-num">1</span>
+                    <div>
+                      <strong>Cara Bertahap:</strong><br>
+                      Bagi dengan 2 &rarr; <code>(12 &divide; 2) / (18 &divide; 2) = 6/9</code><br>
+                      Bagi dengan 3 &rarr; <code>(6 &divide; 3) / (9 &divide; 3) = 2/3</code> (Selesai! 2 dan 3 sudah tidak bisa dibagi lagi).
+                    </div>
+                  </div>
+                  <div class="sb-step">
+                    <span class="sb-num">2</span>
+                    <div>
+                      <strong>Cara Cepat dengan FPB:</strong><br>
+                      Cari FPB dari 12 dan 18, yaitu <b>6</b>.<br>
+                      Langsung bagi dengan FPB &rarr; <code>(12 &divide; 6) / (18 &divide; 6) = 2/3</code>!
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mini Challenge Interaktif -->
+            <div class="quiz-challenge-box">
+              <h4><i class="fa-solid fa-circle-question"></i> Uji Pemahaman Cepat:</h4>
+              <p>Manakah pecahan berikut yang <strong>SENILAI</strong> dengan <strong>3/5</strong>?</p>
+              <div class="challenge-options" id="senilaiChallengeOptions">
+                <button type="button" class="btn-challenge" data-correct="false">A) 4/10</button>
+                <button type="button" class="btn-challenge" data-correct="true">B) 6/10</button>
+                <button type="button" class="btn-challenge" data-correct="false">C) 9/12</button>
+                <button type="button" class="btn-challenge" data-correct="false">D) 5/3</button>
+              </div>
+              <div class="challenge-feedback hidden" id="senilaiFeedback"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- SUB-MATERI 4: Membandingkan & Mengurutkan Pecahan        -->
+        <!-- ======================================================== -->
+        <div class="materi-panel" id="panelMateri4">
+          <div class="materi-article full-article">
+            <span class="topic-tag">Bab 4 &bull; Perbandingan &amp; Urutan</span>
+            <h3>Membandingkan dan Mengurutkan Pecahan</h3>
+            <p class="article-lead">Untuk membandingkan dua pecahan, kita menggunakan 3 tanda matematika:</p>
+
+            <!-- Tanda Relasi & Mnemonic Buaya -->
+            <div class="tanda-mnemonic-grid">
+              <div class="tanda-card">
+                <span class="tanda-sym">&gt;</span>
+                <strong>Lebih Besar Dari</strong>
+                <small>Trik: Tarik garis di kiri jadi huruf <b>b</b> (besar)</small>
+              </div>
+              <div class="tanda-card">
+                <span class="tanda-sym">&lt;</span>
+                <strong>Lebih Kecil Dari</strong>
+                <small>Trik: Tarik garis di kiri jadi huruf <b>k</b> (kecil)</small>
+              </div>
+              <div class="tanda-card">
+                <span class="tanda-sym">=</span>
+                <strong>Sama Dengan</strong>
+                <small>Kedua pecahan bernilai sama (senilai)</small>
+              </div>
+            </div>
+
+            <!-- Trik Mulut Buaya -->
+            <div class="crocodile-box">
+              <span class="croc-emoji">🐊</span>
+              <div>
+                <strong>Trik Kartun Mulut Buaya:</strong>
+                <p>Bayangkan tanda <code>&gt;</code> atau <code>&lt;</code> sebagai <b>mulut buaya yang lapar</b>. Buaya pintar selalu membuka mulutnya yang lebar ke arah makanan yang <b>LEBIH BANYAK / BESAR</b>!</p>
+              </div>
+            </div>
+
+            <!-- 3 Metode Membandingkan -->
+            <div class="compare-methods-stack">
+              <!-- Metode 1 -->
+              <div class="method-card">
+                <div class="method-badge">Metode 1: Jika Penyebutnya SAMA</div>
+                <div class="method-content">
+                  <p>Jika angka penyebut (bawah) sudah sama, <b>langsung bandingkan angka pembilang (atas)</b> seperti membandingkan angka biasa!</p>
+                  <div class="method-example">
+                    <span class="ex-num">2/7</span>
+                    <span class="ex-sign">&lt;</span>
+                    <span class="ex-num">5/7</span>
+                    <span class="ex-note">(karena 2 lebih kecil dari 5)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Metode 2 -->
+              <div class="method-card">
+                <div class="method-badge" style="background:#fef3c7; color:#b45309;">Metode 2: Jika Pembilangnya SAMA</div>
+                <div class="method-content">
+                  <p>Hati-hati! Jika angka atasnya sama, ingat analogi berbagi pizza: <b>Semakin BANYAK orang yang membagi (penyebut makin besar), ukuran kuemu makin KECIL!</b></p>
+                  <div class="method-example">
+                    <span class="ex-num">1/2</span>
+                    <span class="ex-sign">&gt;</span>
+                    <span class="ex-num">1/8</span>
+                    <span class="ex-note">(Setengah loyang jauh lebih besar daripada seperdelapan!)</span>
+                  </div>
+                  <p class="rule-highlight">&bull; <b>Penyebut lebih KECIL = Nilai pecahan LEBIH BESAR!</b></p>
+                </div>
+              </div>
+
+              <!-- Metode 3 -->
+              <div class="method-card butterfly-card">
+                <div class="method-badge" style="background:#e0e7ff; color:#4338ca;">Metode 3: Metode Kupu-Kupu (Perkalian Silang) &mdash; Paling Populer!</div>
+                <div class="method-content">
+                  <p>Gunakan metode ini untuk membandingkan 2 pecahan berpenyebut beda tanpa perlu menyamakan penyebut!</p>
+                  
+                  <div class="butterfly-diagram">
+                    <div class="bf-step-row">
+                      <span class="bf-title">Contoh: Bandingkan <strong>3/4</strong> dan <strong>2/3</strong></span>
+                    </div>
+                    <div class="bf-calc-box">
+                      <div class="bf-wing left">
+                        <span>3 &times; 3 = <strong>9</strong></span>
+                        <small>(Atas kiri &times; Bawah kanan)</small>
+                      </div>
+                      <div class="bf-center">
+                        <span class="bf-frac">3/4</span>
+                        <span class="bf-res-sign">&gt;</span>
+                        <span class="bf-frac">2/3</span>
+                      </div>
+                      <div class="bf-wing right">
+                        <span>4 &times; 2 = <strong>8</strong></span>
+                        <small>(Bawah kiri &times; Atas kanan)</small>
+                      </div>
+                    </div>
+                    <p class="bf-verdict">Karena <strong>9 &gt; 8</strong>, maka terbukti pasti <strong>3/4 &gt; 2/3</strong>! Cepat dan mudah bukan? 🎉</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mengurutkan Pecahan -->
+            <div class="sorting-fractions-card">
+              <h4><i class="fa-solid fa-arrow-down-short-wide"></i> Cara Mengurutkan Beberapa Pecahan:</h4>
+              <p>Untuk mengurutkan 3 atau lebih pecahan yang penyebutnya berbeda:</p>
+              <ol class="sorting-steps-list">
+                <li><b>Langkah 1:</b> Tentukan <b>KPK</b> dari seluruh penyebut untuk menyamakan penyebutnya.</li>
+                <li><b>Langkah 2:</b> Sesuaikan angka pembilang masing-masing pecahan.</li>
+                <li><b>Langkah 3:</b> Urutkan pembilang dari yang terkecil ke terbesar (naik) atau sebaliknya (turun).</li>
+              </ol>
+
+              <div class="sorting-worked-example">
+                <strong>Contoh Soal:</strong> Urutkan pecahan <code>1/2, 2/3, 1/4</code> dari yang <b>terkecil</b>!<br>
+                <ul>
+                  <li>KPK dari 2, 3, dan 4 adalah <b>12</b>.</li>
+                  <li>Ubah menjadi: <code>1/2 = 6/12</code> &bull; <code>2/3 = 8/12</code> &bull; <code>1/4 = 3/12</code></li>
+                  <li>Urutan dari yang terkecil: <code>3/12, 6/12, 8/12</code></li>
+                  <li>Maka urutan aslinya adalah: <strong class="text-success">1/4, 1/2, 2/3</strong>.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- SUB-MATERI: Video Pembelajaran Pecahan                   -->
+        <!-- ======================================================== -->
+        <div class="materi-panel" id="panelMateriVideo">
+          <div class="materi-article full-article">
+            <span class="topic-tag"><i class="fa-solid fa-film"></i> Media Video Interaktif</span>
+            
+            <div class="video-materi-card" style="margin-top: 10px;">
+              <div class="vm-header">
+                <div class="vm-title-group">
+                  <span class="vm-badge"><i class="fa-solid fa-play"></i> Video Edukasi</span>
+                  <h3 class="vm-title">Video Pembelajaran Pecahan</h3>
+                  <p class="vm-subtitle">Simak video berikut untuk memahami konsep pecahan.</p>
+                </div>
+                <div class="vm-header-actions">
+                  <span class="vm-tag-hd"><i class="fa-solid fa-circle-check"></i> Video HD 1080p</span>
+                </div>
+              </div>
+
+              <!-- Video Player Element with Native Responsive Controls -->
+              <div class="vm-player-wrapper">
+                <video id="materiVideoPlayer" class="video-player-element" controls playsinline preload="metadata">
+                  <source src="assets/video/pecahan.mp4" type="video/mp4">
+                  <source src="assets/video/Pecahan.MP4" type="video/mp4">
+                  Browser kamu tidak mendukung pemutar video HTML5.
+                </video>
+              </div>
+
+              <!-- YouTube Link & Video Source Reference below video -->
+              <div class="vm-footer">
+                <div class="vm-yt-box">
+                  <div class="vm-yt-info">
+                    <span class="yt-icon-badge"><i class="fa-brands fa-youtube"></i></span>
+                    <div class="yt-text-meta">
+                      <span class="yt-label">Tonton juga di YouTube:</span>
+                      <a href="https://www.youtube.com/watch?v=4VFsHwtJY30" target="_blank" rel="noopener noreferrer" class="vm-yt-link">
+                        https://www.youtube.com/watch?v=4VFsHwtJY30 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <a href="https://www.youtube.com/watch?v=4VFsHwtJY30" target="_blank" rel="noopener noreferrer" class="btn-yt-visit">
+                    <i class="fa-brands fa-youtube"></i> Buka di YouTube
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Petunjuk Belajar dengan Video -->
+            <div class="video-tips-card">
+              <h4><i class="fa-solid fa-lightbulb" style="color:#eab308;"></i> Tips Belajar dari Video:</h4>
+              <ul class="video-tips-list">
+                <li>Gunakan tombol <b>Play/Pause</b> jika ingin mencatat rumus atau penjelasan penting.</li>
+                <li>Atur <b>Volume</b> atau gunakan headset agar suara penjelasan terdengar jelas.</li>
+                <li>Gunakan tombol <b>Layar Penuh (Fullscreen)</b> di pojok kanan bawah pemutar video untuk tampilan yang lebih besar dan nyaman.</li>
+                <li>Geser <b>Progress Bar</b> ke bagian yang ingin kamu ulang kembali jika ada konsep yang belum dipahami.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- SUB-MATERI 5: Operasi Hitung Lengkap & Soal Cerita       -->
+        <!-- ======================================================== -->
+        <div class="materi-panel" id="panelMateri5">
+          <div class="materi-article full-article">
+            <span class="topic-tag">Bab 5 &bull; Operasi Hitung &amp; Aplikasi Nyata</span>
+            <h3>Operasi Hitung Pecahan &amp; Penerapan Soal Cerita</h3>
+            <p class="article-lead">Mari pelajari bagaimana melakukan operasi hitung penjumlahan, pengurangan, perkalian, dan pembagian pecahan beserta contoh masalah di kehidupan sehari-hari.</p>
+
+            <!-- Penjumlahan & Pengurangan -->
+            <div class="ops-comparison">
+              <!-- Kasus 1: Penyebut Sama -->
+              <div class="ops-card">
+                <div class="ops-header easy">
+                  <i class="fa-solid fa-circle-check"></i> 1. Penjumlahan / Pengurangan (Penyebut Sama)
+                </div>
+                <div class="ops-body">
+                  <p>Cukup operasikan <b>angka pembilang (atas)</b> saja, angka penyebutnya <b>tetap dan tidak boleh dijumlahkan</b>!</p>
+                  
+                  <div class="calc-step-box">
+                    <span class="calc-frac"><sup>1</sup>&frasl;<sub>5</sub></span> + 
+                    <span class="calc-frac"><sup>2</sup>&frasl;<sub>5</sub></span> = 
+                    <span class="calc-frac"><sup>(1 + 2)</sup>&frasl;<sub>5</sub></span> = 
+                    <span class="calc-res"><sup>3</sup>&frasl;<sub>5</sub></span>
+                  </div>
+
+                  <div class="calc-step-box" style="margin-top:10px;">
+                    <span class="calc-frac"><sup>6</sup>&frasl;<sub>7</sub></span> &minus; 
+                    <span class="calc-frac"><sup>2</sup>&frasl;<sub>7</sub></span> = 
+                    <span class="calc-frac"><sup>(6 &minus; 2)</sup>&frasl;<sub>7</sub></span> = 
+                    <span class="calc-res"><sup>4</sup>&frasl;<sub>7</sub></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Kasus 2: Penyebut Berbeda -->
+              <div class="ops-card">
+                <div class="ops-header medium">
+                  <i class="fa-solid fa-bolt"></i> 2. Penjumlahan / Pengurangan (Penyebut Berbeda)
+                </div>
+                <div class="ops-body">
+                  <p><b>Langkah 1:</b> Samakan penyebut dengan mencari <b>KPK</b> penyebutnya.</p>
+                  <p><b>Langkah 2:</b> Kalikan pembilang sesuai faktor pengali, lalu operasikan pembilangnya.</p>
+                  
+                  <div class="calc-step-box">
+                    <span class="calc-frac"><sup>1</sup>&frasl;<sub>2</sub></span> + 
+                    <span class="calc-frac"><sup>1</sup>&frasl;<sub>4</sub></span> = 
+                    <span class="calc-frac"><sup>2</sup>&frasl;<sub>4</sub></span> + 
+                    <span class="calc-frac"><sup>1</sup>&frasl;<sub>4</sub></span> = 
+                    <span class="calc-res"><sup>3</sup>&frasl;<sub>4</sub></span>
+                  </div>
+
+                  <!-- Trik Silang -->
+                  <div class="formula-box" style="margin-top:12px;">
+                    <strong>Trik Rumus Silang Cepat:</strong><br>
+                    <code>a/b + c/d = (a&times;d + b&times;c) / (b&times;d)</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Perkalian & Pembagian -->
+            <div class="ops-advanced-grid">
+              <!-- Perkalian -->
+              <div class="ops-adv-card multiply-theme">
+                <div class="ops-adv-header">
+                  <i class="fa-solid fa-xmark"></i> Perkalian Pecahan (Paling Mudah!)
+                </div>
+                <div class="ops-adv-body">
+                  <p>Aturan emas: <strong>"Atas kali Atas, Bawah kali Bawah!"</strong> Tidak perlu menyamakan penyebut sama sekali!</p>
+                  <div class="calc-step-box">
+                    <span class="calc-frac"><sup>2</sup>&frasl;<sub>3</sub></span> &times; 
+                    <span class="calc-frac"><sup>4</sup>&frasl;<sub>5</sub></span> = 
+                    <span class="calc-frac"><sup>(2 &times; 4)</sup>&frasl;<sub>(3 &times; 5)</sub></span> = 
+                    <span class="calc-res"><sup>8</sup>&frasl;<sub>15</sub></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pembagian -->
+              <div class="ops-adv-card divide-theme">
+                <div class="ops-adv-header">
+                  <i class="fa-solid fa-arrows-rotate"></i> Pembagian Pecahan (Trik KCF)
+                </div>
+                <div class="ops-adv-body">
+                  <p>Trik <strong>KCF (Keep, Change, Flip)</strong>:</p>
+                  <ul>
+                    <li><b>Keep:</b> Pertahankan pecahan pertama.</li>
+                    <li><b>Change:</b> Ubah tanda bagi (&divide;) menjadi kali (&times;).</li>
+                    <li><b>Flip:</b> Balik posisi pecahan kedua!</li>
+                  </ul>
+                  <div class="calc-step-box">
+                    <span class="calc-frac"><sup>3</sup>&frasl;<sub>4</sub></span> &divide; 
+                    <span class="calc-frac"><sup>1</sup>&frasl;<sub>2</sub></span> = 
+                    <span class="calc-frac"><sup>3</sup>&frasl;<sub>4</sub></span> &times; 
+                    <span class="calc-frac"><sup>2</sup>&frasl;<sub>1</sub></span> = 
+                    <span class="calc-res"><sup>6</sup>&frasl;<sub>4</sub> = 1 <sup>1</sup>&frasl;<sub>2</sub></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Soal Cerita Kehidupan Nyata Interaktif -->
+            <div class="story-problem-section">
+              <h4><i class="fa-solid fa-book-open"></i> Kumpulan Soal Cerita Kehidupan Sehari-Hari:</h4>
+              <p>Perhatikan contoh-contoh soal kontekstual berikut. Klik tombol <b>"Lihat Pembahasan"</b> untuk mempelajari langkah penyelesaiannya:</p>
+
+              <!-- Soal 1 -->
+              <div class="story-card">
+                <div class="story-badge">🍰 Soal Cerita 1: Kue Ulang Tahun</div>
+                <p class="story-text">Sani memiliki 1 buah kue tart ulang tahun. Ia memotongnya dan memberikan <b>3/8 bagian</b> kepada temannya, serta <b>2/8 bagian</b> kepada adik tersayang. Berapa total bagian kue yang sudah dibagikan Sani, dan berapa sisa kuenya sekarang?</p>
+                
+                <button type="button" class="btn-toggle-story" data-target="storyAns1">
+                  <i class="fa-solid fa-eye"></i> Lihat Pembahasan Lengkap
+                </button>
+
+                <div class="story-answer-box hidden" id="storyAns1">
+                  <div class="sa-step">
+                    <strong>1. Total kue yang dibagikan:</strong><br>
+                    <code>3/8 + 2/8 = (3 + 2)/8 = 5/8 bagian kue.</code>
+                  </div>
+                  <div class="sa-step">
+                    <strong>2. Sisa kue Sani:</strong><br>
+                    1 kue utuh = <code>8/8</code> bagian.<br>
+                    <code>Sisa = 8/8 &minus; 5/8 = 3/8 bagian kue.</code>
+                  </div>
+                  <div class="sa-conclusion">
+                    &check; Jadi, kue yang sudah dibagikan adalah <b>5/8 bagian</b>, dan sisa kue milik Sani adalah <b>3/8 bagian</b>.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Soal 2 -->
+              <div class="story-card">
+                <div class="story-badge" style="background:#ecfdf5; color:#065f46;">🧵 Soal Cerita 2: Pita Kerajinan Tangan</div>
+                <p class="story-text">Ibu memiliki pita penghias kado sepanjang <b>3/4 meter</b>. Kakak menggunakan <b>1/2 meter</b> pita tersebut untuk menghias kado sahabatnya. Berapa meter sisa pita yang masih dimiliki Ibu?</p>
+                
+                <button type="button" class="btn-toggle-story" data-target="storyAns2">
+                  <i class="fa-solid fa-eye"></i> Lihat Pembahasan Lengkap
+                </button>
+
+                <div class="story-answer-box hidden" id="storyAns2">
+                  <div class="sa-step">
+                    <strong>1. Samakan penyebut kedua pecahan:</strong><br>
+                    Penyebut 4 dan 2 &rarr; KPK-nya adalah <b>4</b>.<br>
+                    Ubah 1/2 menjadi: <code>1/2 &times; 2/2 = 2/4 meter.</code>
+                  </div>
+                  <div class="sa-step">
+                    <strong>2. Kurangkan kedua pecahan:</strong><br>
+                    <code>Sisa = 3/4 &minus; 2/4 = (3 &minus; 2)/4 = 1/4 meter.</code>
+                  </div>
+                  <div class="sa-conclusion">
+                    &check; Jadi, sisa pita yang masih dimiliki Ibu adalah <b>1/4 meter</b> (atau 0,25 meter).
+                  </div>
+                </div>
+              </div>
+
+              <!-- Soal 3 -->
+              <div class="story-card">
+                <div class="story-badge" style="background:#fff7ed; color:#c2410c;">🥞 Soal Cerita 3: Resep Pancake Manis</div>
+                <p class="story-text">Untuk membuat 1 loyang pancake manis yang lezat, Nenek membutuhkan <b>1 1/2 cangkir tepung terigu</b> dan <b>3/4 cangkir susu cair</b>. Berapakah total cangkir gabungan tepung dan susu yang dibutuhkan Nenek?</p>
+                
+                <button type="button" class="btn-toggle-story" data-target="storyAns3">
+                  <i class="fa-solid fa-eye"></i> Lihat Pembahasan Lengkap
+                </button>
+
+                <div class="story-answer-box hidden" id="storyAns3">
+                  <div class="sa-step">
+                    <strong>1. Ubah pecahan campuran ke pecahan biasa:</strong><br>
+                    <code>1 1/2 = (1 &times; 2 + 1)/2 = 3/2 cangkir.</code>
+                  </div>
+                  <div class="sa-step">
+                    <strong>2. Samakan penyebut KPK dari 2 dan 4 adalah 4:</strong><br>
+                    <code>3/2 = 6/4 cangkir.</code>
+                  </div>
+                  <div class="sa-step">
+                    <strong>3. Jumlahkan kedua bahan:</strong><br>
+                    <code>6/4 + 3/4 = 9/4 cangkir.</code><br>
+                    Ubah ke pecahan campuran: <code>9 &divide; 4 = 2 sisa 1 &rarr; 2 1/4 cangkir.</code>
+                  </div>
+                  <div class="sa-conclusion">
+                    &check; Jadi, total gabungan bahan yang dibutuhkan Nenek adalah <b>2 1/4 cangkir</b> (atau 2,25 cangkir).
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 4. HALAMAN MENU GAME ("ULAR TANGGA PECAHAN")             -->
+  <!-- ======================================================== -->
+  <section id="gameSection" class="app-screen">
+
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <!-- 4.A LOBI PEMILIHAN GAME (GAME HUB / LOBBY)                  -->
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <div id="gameLobbyView" class="game-subview active">
+      <div class="game-hub-container">
+        
+        <!-- Interactive Classroom Background Ambient Decor -->
+        <div class="game-hub-classroom-bg" aria-hidden="true">
+          <div class="decor-floating-fraction decor-frac-1" title="Pecahan Setengah">½</div>
+          <div class="decor-floating-fraction decor-frac-2" title="Pecahan Seperempat">¼</div>
+          <div class="decor-floating-fraction decor-frac-3" title="Pecahan Tiga Perempat">¾</div>
+          <div class="decor-floating-fraction decor-frac-4" title="Pecahan Dua Pertiga">⅔</div>
+        </div>
+
+        <!-- 1. HEADER BAR: Whiteboard Frame, Navigation, Title & Player Profile Panel -->
+        <header class="game-hub-header" id="arenaMainHeader">
+          <!-- Left Navigation: Home & Audio Button -->
+          <div class="hub-nav-left">
+            <button class="btn-back btnBackToMain hub-pill-btn" title="Kembali ke Menu Utama" id="btnBackToMainFromHub">
+              <i class="fa-solid fa-house"></i> <span>Beranda</span>
+            </button>
+            <button class="hub-pill-btn hub-btn-sound" id="btnHubSoundToggle" title="Nyalakan/Matikan Suara">
+              <i class="fa-solid fa-volume-high" id="hubSoundIcon"></i> <span>Suara</span>
+            </button>
+          </div>
+          
+          <!-- Center: Whiteboard Brand Title Block -->
+          <div class="game-hub-title-block">
+            <div class="game-hub-badge-wrapper">
+              <span class="game-hub-badge">
+                <i class="fa-solid fa-gamepad"></i> PUSAT PERMAINAN EDUKATIF
+              </span>
+            </div>
+            <h1 class="game-hub-title">ARENA GAME PECAHAN</h1>
+            <p class="game-hub-subtitle">Pilih permainan pecahan favoritmu, taklukkan tantangannya, dan raih bintang juara!</p>
+          </div>
+          
+          <!-- Right: Player Profile Panel (Nama, Bintang, Skor, Progress) -->
+          <div class="game-hub-profile-panel" id="ghPlayerProfilePanel" title="Profil Pemain">
+            <div class="gh-profile-top">
+              <div class="gh-avatar-wrap">
+                <span class="gh-avatar" id="ghUserAvatar">👨‍🎓</span>
+                <span class="gh-avatar-badge" title="Level Siswa">★</span>
+              </div>
+              <div class="gh-user-info">
+                <span class="gh-name" id="ghUserName">Adnan Bahar</span>
+                <div class="gh-stats-row">
+                  <span class="gh-stat-chip chip-star" title="Bintang Terkumpul">
+                    ⭐ <strong id="ghUserStars">3</strong>
+                  </span>
+                  <span class="gh-stat-chip chip-score" title="Skor Juara">
+                    🏆 <strong id="ghUserScore">50</strong>
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Progress Pemain -->
+            <div class="gh-progress-container">
+              <div class="gh-progress-header">
+                <span class="gh-progress-label">Progress:</span>
+                <span class="gh-progress-level" id="ghProgressText">Level 2 • Juara Kelas</span>
+              </div>
+              <div class="gh-progress-track">
+                <div class="gh-progress-fill" id="ghProgressFill" style="width: 60%;"></div>
+              </div>
+            </div>
+
+            <!-- Mini Classroom Leaderboard Widget on Hover/Dropdown -->
+            <div class="gh-leaderboard-card" title="Papan Peringkat Kelas">
+              <div class="gh-lb-header">
+                <i class="fa-solid fa-ranking-star"></i> <span>Peringkat Kelas</span>
+              </div>
+              <div class="gh-lb-list">
+                <div class="gh-lb-item active-user">
+                  <span class="gh-lb-rank">1</span>
+                  <span class="gh-lb-name">Adnan Bahar</span>
+                  <span class="gh-lb-score">3⭐ 50🏆</span>
+                </div>
+                <div class="gh-lb-item">
+                  <span class="gh-lb-rank">2</span>
+                  <span class="gh-lb-name">Sewan P.</span>
+                  <span class="gh-lb-score">3⭐ 50🏆</span>
+                </div>
+                <div class="gh-lb-item">
+                  <span class="gh-lb-rank">3</span>
+                  <span class="gh-lb-name">Nisiah</span>
+                  <span class="gh-lb-score">4⭐ 10🏆</span>
+                </div>
+                <div class="gh-lb-item">
+                  <span class="gh-lb-rank">4</span>
+                  <span class="gh-lb-name">Anya Bogar</span>
+                  <span class="gh-lb-score">4⭐ 50🏆</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- 2. LAYOUT UTAMA: 3 CARD PERMAINAN UTAMA -->
+        <main class="game-hub-grid grid-3-stations" id="arenaCardsGrid">
+
+          <!-- KARTU 1: ULAR TANGGA PECAHAN -->
+          <article class="game-card-3d card-game-ut" id="cardGameUlarTangga">
+            <div class="game-card-badge badge-classic">
+              <i class="fa-solid fa-crown"></i> Game Klasik
+            </div>
+            
+            <div class="game-card-icon-banner banner-ut">
+              <!-- Custom 3D SVG Illustration: Board Mat, Golden Ladder, Green Snake & 3D Dice -->
+              <svg class="game-banner-svg" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustrasi Ular Tangga Pecahan">
+                <defs>
+                  <linearGradient id="utSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#d1fae5"/>
+                    <stop offset="100%" stop-color="#a7f3d0"/>
+                  </linearGradient>
+                  <linearGradient id="ladderGold" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f59e0b"/>
+                    <stop offset="50%" stop-color="#fbbf24"/>
+                    <stop offset="100%" stop-color="#d97706"/>
+                  </linearGradient>
+                  <linearGradient id="snakeSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#22c55e"/>
+                    <stop offset="100%" stop-color="#15803d"/>
+                  </linearGradient>
+                  <filter id="utShadow" x="-10%" y="-10%" width="120%" height="130%">
+                    <feDropShadow dx="0" dy="6" stdDeviation="4" flood-opacity="0.16"/>
+                  </filter>
+                </defs>
+                <rect width="320" height="180" fill="url(#utSkyGrad)"/>
+                
+                <!-- Floor Mat Stepped Grid Pattern 1–30 -->
+                <g opacity="0.4" stroke="#059669" stroke-width="1.5">
+                  <path d="M40 160 L140 100 L280 100 L180 160 Z" fill="#6ee7b7"/>
+                  <path d="M75 140 L175 80" />
+                  <path d="M110 120 L210 60" />
+                  <path d="M140 100 L180 160" />
+                  <path d="M210 100 L250 160" />
+                </g>
+                <text x="75" y="152" font-size="13" font-weight="bold" fill="#047857" font-family="'Fredoka', sans-serif">½</text>
+                <text x="145" y="152" font-size="13" font-weight="bold" fill="#047857" font-family="'Fredoka', sans-serif">⅔</text>
+                <text x="215" y="152" font-size="13" font-weight="bold" fill="#047857" font-family="'Fredoka', sans-serif">¾</text>
+
+                <!-- Golden Ladder -->
+                <g transform="translate(150, 20) rotate(12)" filter="url(#utShadow)">
+                  <rect x="0" y="0" width="10" height="140" rx="5" fill="url(#ladderGold)"/>
+                  <rect x="42" y="0" width="10" height="140" rx="5" fill="url(#ladderGold)"/>
+                  <rect x="8" y="24" width="36" height="8" rx="4" fill="#fbbf24"/>
+                  <rect x="8" y="54" width="36" height="8" rx="4" fill="#fbbf24"/>
+                  <rect x="8" y="84" width="36" height="8" rx="4" fill="#fbbf24"/>
+                  <rect x="8" y="114" width="36" height="8" rx="4" fill="#fbbf24"/>
+                </g>
+
+                <!-- Cute Friendly Green Snake -->
+                <g filter="url(#utShadow)">
+                  <path d="M120 150 C 130 110, 160 120, 165 85 C 170 50, 140 40, 150 25" 
+                        fill="none" stroke="url(#snakeSkin)" stroke-width="22" stroke-linecap="round"/>
+                  <!-- Yellow belly accent -->
+                  <path d="M122 150 C 132 110, 162 120, 167 85 C 172 50, 142 40, 152 25" 
+                        fill="none" stroke="#fef08a" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+                  <!-- Snake Head -->
+                  <circle cx="152" cy="22" r="18" fill="#22c55e"/>
+                  <circle cx="145" cy="18" r="5" fill="#ffffff"/>
+                  <circle cx="146" cy="18" r="2.5" fill="#0f172a"/>
+                  <circle cx="159" cy="18" r="5" fill="#ffffff"/>
+                  <circle cx="160" cy="18" r="2.5" fill="#0f172a"/>
+                  <path d="M148 26 Q153 32 158 26" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round"/>
+                  <!-- Friendly tongue -->
+                  <path d="M153 30 L153 38 L150 42 M153 38 L156 42" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+                </g>
+
+                <!-- 3D Red & White Die with Dots -->
+                <g transform="translate(42, 75)" filter="url(#utShadow)">
+                  <polygon points="35,5 65,18 35,32 5,18" fill="#f87171"/>
+                  <polygon points="5,18 35,32 35,68 5,52" fill="#dc2626"/>
+                  <polygon points="35,32 65,18 65,52 35,68" fill="#b91c1c"/>
+                  <circle cx="35" cy="18" r="3.5" fill="#ffffff"/>
+                  <circle cx="20" cy="38" r="3" fill="#ffffff"/>
+                  <circle cx="20" cy="50" r="3" fill="#ffffff"/>
+                  <circle cx="50" cy="32" r="3" fill="#ffffff"/>
+                  <circle cx="50" cy="44" r="3" fill="#ffffff"/>
+                  <circle cx="50" cy="56" r="3" fill="#ffffff"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="game-card-body">
+              <h2 class="game-card-title">Ular Tangga Pecahan</h2>
+              <p class="game-card-desc">Belajar pecahan sambil bermain ular tangga.</p>
+              
+              <div class="game-card-tags">
+                <span class="g-tag"><i class="fa-solid fa-dice"></i> Dadu 3D</span>
+                <span class="g-tag"><i class="fa-solid fa-shapes"></i> Kotak 1–30</span>
+                <span class="g-tag"><i class="fa-solid fa-star"></i> Bintang &amp; Skor</span>
+              </div>
+            </div>
+
+            <div class="game-card-footer">
+              <button class="btn-play-game btn-play-ut" id="btnLaunchGameUt">
+                <span>MAIN SEKARANG</span> <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </article>
+
+          <!-- KARTU 2: KOKI PIZZA PECAHAN -->
+          <article class="game-card-3d card-game-pizza" id="cardGamePizza">
+            <div class="game-card-badge badge-creative">
+              <i class="fa-solid fa-fire"></i> Terpopuler
+            </div>
+
+            <div class="game-card-icon-banner banner-pizza">
+              <!-- Custom 3D SVG Illustration: Chef Child & Divided Pizza Slices -->
+              <svg class="game-banner-svg" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustrasi Koki Pizza Pecahan">
+                <defs>
+                  <linearGradient id="pizzaSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#fff7ed"/>
+                    <stop offset="100%" stop-color="#fed7aa"/>
+                  </linearGradient>
+                  <linearGradient id="crustGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#d97706"/>
+                    <stop offset="100%" stop-color="#b45309"/>
+                  </linearGradient>
+                  <linearGradient id="cheeseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#fef08a"/>
+                    <stop offset="100%" stop-color="#f59e0b"/>
+                  </linearGradient>
+                </defs>
+                <rect width="320" height="180" fill="url(#pizzaSkyGrad)"/>
+
+                <!-- Kitchen Chef Wooden Board -->
+                <ellipse cx="160" cy="148" rx="130" ry="24" fill="#fed7aa" stroke="#d97706" stroke-width="2.5" opacity="0.6"/>
+
+                <!-- Chef Character Elements Left -->
+                <g transform="translate(42, 38)" filter="url(#utShadow)">
+                  <path d="M12 55 Q 0 40 10 24 Q 24 5 44 14 Q 65 4 75 22 Q 85 40 76 55 Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+                  <path d="M10 52 L78 52 L74 68 L14 68 Z" fill="#ef4444" rx="2"/>
+                  <path d="M8 68 L80 68 L78 74 L10 74 Z" fill="#ffffff"/>
+                  <circle cx="85" cy="18" r="4" fill="#f59e0b"/>
+                </g>
+
+                <!-- 3D Pizza Slices Right -->
+                <g transform="translate(145, 25)" filter="url(#utShadow)">
+                  <path d="M25 22 Q 85 8 135 48 L 55 125 Z" fill="url(#crustGrad)"/>
+                  <path d="M28 26 Q 80 14 128 48 L 57 118 Z" fill="url(#cheeseGrad)"/>
+                  
+                  <!-- Pepperoni Slices -->
+                  <circle cx="55" cy="45" r="13" fill="#dc2626"/>
+                  <circle cx="53" cy="43" r="10" fill="#ef4444"/>
+                  <circle cx="95" cy="52" r="14" fill="#dc2626"/>
+                  <circle cx="93" cy="50" r="11" fill="#ef4444"/>
+                  <circle cx="72" cy="85" r="12" fill="#dc2626"/>
+                  <circle cx="70" cy="83" r="9" fill="#ef4444"/>
+
+                  <!-- Melted cheese droplets & Basil Leaves -->
+                  <path d="M48 116 Q 52 135 56 120" stroke="#fef08a" stroke-width="4" stroke-linecap="round" fill="none"/>
+                  <ellipse cx="78" cy="38" rx="7" ry="4" fill="#16a34a" transform="rotate(-20 78 38)"/>
+                  <ellipse cx="80" cy="70" rx="6" ry="3" fill="#16a34a" transform="rotate(30 80 70)"/>
+
+                  <!-- Fraction Badge On Pizza -->
+                  <g transform="translate(8, 70)">
+                    <circle cx="16" cy="16" r="18" fill="#ffffff" stroke="#f97316" stroke-width="2.5"/>
+                    <text x="16" y="21" font-size="14" font-weight="bold" fill="#ea580c" text-anchor="middle" font-family="'Fredoka', sans-serif">¼</text>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <div class="game-card-body">
+              <h2 class="game-card-title">Koki Pizza Pecahan</h2>
+              <p class="game-card-desc">Susun pizza berdasarkan nilai pecahan.</p>
+              
+              <div class="game-card-tags">
+                <span class="g-tag"><i class="fa-solid fa-pizza-slice"></i> Visual Irisan</span>
+                <span class="g-tag"><i class="fa-solid fa-layer-group"></i> Level 1–5</span>
+                <span class="g-tag"><i class="fa-solid fa-star"></i> Bintang &amp; Skor</span>
+              </div>
+            </div>
+
+            <div class="game-card-footer">
+              <button class="btn-play-game btn-play-pizza" id="btnLaunchGamePizza">
+                <span>MAIN SEKARANG</span> <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </article>
+
+          <!-- KARTU 3: TIMBANGAN PECAHAN -->
+          <article class="game-card-3d card-game-timbangan" id="cardGameTimbangan">
+            <div class="game-card-badge badge-logic">
+              <i class="fa-solid fa-brain"></i> Asah Logika
+            </div>
+
+            <div class="game-card-icon-banner banner-timbangan">
+              <!-- Custom 3D SVG Illustration: Friendly Scale with Fraction Weights & Apple -->
+              <svg class="game-banner-svg" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustrasi Timbangan Pecahan">
+                <defs>
+                  <linearGradient id="scaleSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#f0f9ff"/>
+                    <stop offset="100%" stop-color="#bae6fd"/>
+                  </linearGradient>
+                  <linearGradient id="scaleBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#60a5fa"/>
+                    <stop offset="100%" stop-color="#2563eb"/>
+                  </linearGradient>
+                  <linearGradient id="panGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#fbbf24"/>
+                    <stop offset="100%" stop-color="#f59e0b"/>
+                  </linearGradient>
+                </defs>
+                <rect width="320" height="180" fill="url(#scaleSkyGrad)"/>
+
+                <g transform="translate(160, 20)" filter="url(#utShadow)">
+                  <!-- Scale Top Badge Screen: SAME (=) ✓ -->
+                  <rect x="-46" y="8" width="92" height="32" rx="10" fill="#1e3a8a" stroke="#60a5fa" stroke-width="2.5"/>
+                  <text x="0" y="28" font-size="13" font-weight="bold" fill="#4ade80" text-anchor="middle" font-family="'Fredoka', sans-serif">SAME (=) ✓</text>
+
+                  <!-- Cute Vertical Scale Stand with Friendly Smiling Face -->
+                  <rect x="-14" y="40" width="28" height="85" rx="10" fill="url(#scaleBodyGrad)"/>
+                  <ellipse cx="-5" cy="98" rx="2.5" ry="3.5" fill="#ffffff"/>
+                  <ellipse cx="5" cy="98" rx="2.5" ry="3.5" fill="#ffffff"/>
+                  <path d="M-5 106 Q 0 112 5 106" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+                  <!-- Horizontal Balance Beam -->
+                  <rect x="-120" y="44" width="240" height="8" rx="4" fill="#93c5fd"/>
+                  <circle cx="0" cy="48" r="7" fill="#fbbf24"/>
+
+                  <!-- Left Pan: Red Fraction Pie (1/2) -->
+                  <line x1="-105" y1="48" x2="-130" y2="92" stroke="#64748b" stroke-width="2"/>
+                  <line x1="-105" y1="48" x2="-80" y2="92" stroke="#64748b" stroke-width="2"/>
+                  <ellipse cx="-105" cy="94" rx="32" ry="7" fill="url(#panGrad)"/>
+                  <g transform="translate(-105, 78)">
+                    <circle cx="0" cy="0" r="16" fill="#f87171" stroke="#dc2626" stroke-width="2"/>
+                    <path d="M0,0 L0,-16 A16,16 0 0,1 0,16 Z" fill="#ef4444"/>
+                    <text x="0" y="5" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="'Fredoka', sans-serif">½</text>
+                  </g>
+
+                  <!-- Right Pan: Two Green Fraction Blocks (1/4 + 1/4) -->
+                  <line x1="105" y1="48" x2="80" y2="92" stroke="#64748b" stroke-width="2"/>
+                  <line x1="105" y1="48" x2="130" y2="92" stroke="#64748b" stroke-width="2"/>
+                  <ellipse cx="105" cy="94" rx="32" ry="7" fill="url(#panGrad)"/>
+                  <g transform="translate(105, 76)">
+                    <rect x="-15" y="-12" width="14" height="14" rx="2" fill="#22c55e" stroke="#15803d" stroke-width="1.5"/>
+                    <text x="-8" y="-1" font-size="9" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="'Fredoka', sans-serif">¼</text>
+                    <rect x="1" y="-12" width="14" height="14" rx="2" fill="#22c55e" stroke="#15803d" stroke-width="1.5"/>
+                    <text x="8" y="-1" font-size="9" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="'Fredoka', sans-serif">¼</text>
+                  </g>
+
+                  <!-- Scale Base Pedestal -->
+                  <path d="M-45 125 L45 125 L35 142 L-35 142 Z" fill="#1e3a8a"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="game-card-body">
+              <h2 class="game-card-title">Timbangan Pecahan</h2>
+              <p class="game-card-desc">Bandingkan nilai pecahan dengan tepat.</p>
+              
+              <div class="game-card-tags">
+                <span class="g-tag"><i class="fa-solid fa-scale-balanced"></i> Jungkat-Jungkit</span>
+                <span class="g-tag"><i class="fa-solid fa-code-compare"></i> Simbol &lt; = &gt;</span>
+                <span class="g-tag"><i class="fa-solid fa-star"></i> Bintang &amp; Skor</span>
+              </div>
+            </div>
+
+            <div class="game-card-footer">
+              <button class="btn-play-game btn-play-timbangan" id="btnLaunchGameTimbangan">
+                <span>MAIN SEKARANG</span> <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </article>
+
+        </main><!-- end game-hub-grid -->
+
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <!-- 4.B SUBVIEW GAME 1: ULAR TANGGA PECAHAN                     -->
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <div id="gameViewUlarTangga" class="game-subview" style="display:none;">
+      <div class="ut-wrapper">
+
+        <!-- ── HEADER ── -->
+        <header class="ut-header">
+          <div class="ut-header-nav">
+            <button class="ut-btn-back btnBackToGameLobby" title="Pilihan Game">
+              <i class="fa-solid fa-gamepad"></i> <span>Game</span>
+            </button>
+            <button class="ut-btn-back btnBackToMain" title="Menu Utama">
+              <i class="fa-solid fa-arrow-left"></i> <span>Menu</span>
+            </button>
+          </div>
+          <div class="ut-title-block">
+            <div class="ut-title-emoji">🐍</div>
+            <div>
+              <h2 class="ut-main-title">ULAR TANGGA PECAHAN</h2>
+              <p class="ut-subtitle">Belajar Sambil Bermain, Pecahan Jadi Mudah!</p>
+            </div>
+            <div class="ut-title-emoji">🪜</div>
+          </div>
+          <button class="ut-btn-reset" id="btnUtReset" title="Mulai Ulang">
+            <i class="fa-solid fa-rotate-right"></i> Ulang
+          </button>
+        </header>
+
+        <!-- ── SCORE BAR ── -->
+        <div class="ut-scorebar">
+          <div class="ut-stat-chip chip-pos">
+            <span class="chip-icon">📍</span>
+            <span class="chip-label">Posisi</span>
+            <strong id="utPosition">START</strong>
+          </div>
+          <div class="ut-stat-chip chip-score">
+            <span class="chip-icon">⭐</span>
+            <span class="chip-label">Skor</span>
+            <strong id="utScore">0</strong>
+          </div>
+          <div class="ut-stat-chip chip-qa">
+            <span class="chip-icon">✅</span>
+            <span class="chip-label">Benar</span>
+            <strong id="utQAnswered">0</strong>
+          </div>
+          <div class="ut-stat-chip chip-dice">
+            <span class="chip-icon">🎲</span>
+            <span class="chip-label">Giliran</span>
+            <strong id="utTurn">1</strong>
+          </div>
+        </div>
+
+        <!-- ── MAIN GAME AREA ── -->
+        <div class="ut-game-area">
+
+          <!-- LEFT: BOARD -->
+          <div class="ut-board-wrapper">
+            <!-- Board frame decoration -->
+            <div class="ut-board-frame">
+              <div class="ut-board-container" id="utBoardContainer">
+                <!-- SVG Overlay: Snakes & Ladders drawn here by JS -->
+                <svg class="ut-svg-overlay" id="utSvgOverlay"
+                     viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg"
+                     preserveAspectRatio="xMidYMid meet"></svg>
+                <!-- Board Grid: 30 cells generated by JS -->
+                <div class="ut-board-grid" id="utBoardGrid"></div>
+                <!-- Pion (player token) -->
+                <div class="ut-pion" id="utPion">
+                  <div class="pion-body">🚀</div>
+                  <div class="pion-shadow"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Board bottom label -->
+            <div class="ut-board-legend-row">
+              <span class="ut-legend-item"><span class="legend-snake">🐍</span> Ular → Turun</span>
+              <span class="ut-legend-item"><span class="legend-ladder">🪜</span> Tangga → Naik</span>
+              <span class="ut-legend-item"><span class="legend-q">❓</span> Ada Soal</span>
+            </div>
+          </div>
+
+          <!-- RIGHT: CONTROLS PANEL -->
+          <div class="ut-controls-panel">
+
+            <!-- Status message box -->
+            <div class="ut-status-box" id="utStatusBox">
+              <div class="status-icon" id="utStatusIcon">🎮</div>
+              <p id="utStatusMsg">Tekan <strong>LEMPAR DADU</strong> untuk memulai petualangan belajarmu!</p>
+            </div>
+
+            <!-- Dice display -->
+            <div class="ut-dice-section">
+              <div class="ut-dice-wrap">
+                <div class="ut-dice-3d" id="utDice">
+                  <div class="dice-face face-front" id="utDiceFace">
+                    <span class="dice-emoji">🎲</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ut-dice-result">
+                <span class="dice-result-label">Hasil dadu:</span>
+                <span class="dice-result-value" id="utDiceValue">-</span>
+              </div>
+            </div>
+
+            <!-- Roll Button -->
+            <button class="ut-btn-roll" id="btnRollDice" aria-label="Lempar Dadu">
+              <i class="fa-solid fa-dice"></i>
+              <span>LEMPAR DADU!</span>
+            </button>
+
+            <!-- Event log -->
+            <div class="ut-event-log" id="utEventLog">
+              <div class="log-entry log-start">🎬 Game dimulai! Semangat belajar!</div>
+            </div>
+
+            <!-- Fraction reference mini card -->
+            <div class="ut-fraction-ref-card">
+              <div class="frac-ref-title">💡 Ingat!</div>
+              <div class="frac-ref-items">
+                <div class="frac-ref-row">
+                  <svg viewBox="0 0 50 50" class="frac-ref-svg">
+                    <circle cx="25" cy="25" r="22" fill="#fde68a" stroke="#d97706" stroke-width="2"/>
+                    <path d="M25,25 L25,3 A22,22 0 0,1 47,25 Z" fill="#f97316"/>
+                    <line x1="25" y1="3" x2="25" y2="47" stroke="#d97706" stroke-width="1.5"/>
+                    <line x1="3" y1="25" x2="47" y2="25" stroke="#d97706" stroke-width="1.5"/>
+                  </svg>
+                  <span>Pembilang = bagian yang diambil</span>
+                </div>
+                <div class="frac-ref-row">
+                  <div class="frac-ref-frac"><sup>3</sup>&frasl;<sub>4</sub></div>
+                  <span>Penyebut = jumlah bagian total</span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- end controls -->
+        </div><!-- end game area -->
+
+      </div><!-- end ut-wrapper -->
+
+      <!-- ── QUESTION MODAL ── -->
+      <div id="utQuestionModal" class="ut-modal-overlay" style="display:none;" role="dialog" aria-modal="true">
+        <div class="ut-modal-card">
+          <div class="ut-modal-badge">
+            <i class="fa-solid fa-circle-question"></i> SOAL PECAHAN
+          </div>
+          <div class="ut-sq-num" id="utSqNum">Kotak 5</div>
+          <div class="ut-question-text" id="utQuestionText">Pertanyaan akan muncul di sini...</div>
+          <div class="ut-question-visual" id="utQuestionVisual"></div>
+          <div class="ut-options-grid" id="utOptionsGrid"></div>
+          <div class="ut-question-feedback hidden" id="utFeedbackMsg">
+            <span id="utFeedbackIcon">✅</span>
+            <span id="utFeedbackText">Jawaban benar!</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SNAKE / LADDER MODAL ── -->
+      <div id="utEventModal" class="ut-modal-overlay" style="display:none;">
+        <div class="ut-event-modal-card" id="utEventModalCard">
+          <div class="ut-event-modal-emoji" id="utEventModalEmoji">🐍</div>
+          <h3 class="ut-event-modal-title" id="utEventModalTitle">Kena Ular!</h3>
+          <p class="ut-event-modal-msg" id="utEventModalMsg">Kamu turun ke kotak 5. Jangan menyerah!</p>
+          <button class="ut-btn-continue" id="btnContinueAfterEvent">Lanjutkan <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ── WIN SCREEN ── -->
+      <div id="utWinScreen" class="ut-win-overlay" style="display:none;">
+        <div class="ut-win-card">
+          <div class="ut-win-trophies">🏆✨🎊</div>
+          <h2 class="ut-win-title">SELAMAT!<br>KAMU MENANG!</h2>
+          <p class="ut-win-subtitle">Luar biasa! Kamu telah sampai di kotak 36!</p>
+          <div class="ut-win-stats">
+            <div class="ut-win-stat">
+              <span class="ws-icon">⭐</span>
+              <span class="ws-label">Skor Akhir</span>
+              <strong class="ws-val" id="utFinalScore">0</strong>
+            </div>
+            <div class="ut-win-stat">
+              <span class="ws-icon">✅</span>
+              <span class="ws-label">Soal Benar</span>
+              <strong class="ws-val" id="utFinalCorrect">0</strong>
+            </div>
+            <div class="ut-win-stat">
+              <span class="ws-icon">🎲</span>
+              <span class="ws-label">Total Giliran</span>
+              <strong class="ws-val" id="utFinalTurns">0</strong>
+            </div>
+          </div>
+          <div class="ut-win-star-row">
+            <span class="win-star" id="ws1">⭐</span>
+            <span class="win-star" id="ws2">⭐</span>
+            <span class="win-star" id="ws3">⭐</span>
+          </div>
+          <div class="ut-win-buttons">
+            <button class="ut-btn-play-again" id="btnUtPlayAgain">
+              <i class="fa-solid fa-rotate-right"></i> Main Lagi
+            </button>
+            <button class="ut-btn-menu btnBackToGameLobby">
+              <i class="fa-solid fa-gamepad"></i> Pilihan Game
+            </button>
+            <button class="ut-btn-menu btnBackToMain">
+              <i class="fa-solid fa-house"></i> Menu Utama
+            </button>
+          </div>
+        </div>
+      </div>
+    </div><!-- end gameViewUlarTangga -->
+
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <!-- 4.C SUBVIEW GAME 2: KOKI PIZZA PECAHAN                      -->
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <div id="gameViewPizzaChef" class="game-subview" style="display:none;">
+      <div class="game-play-wrapper pizza-theme">
+        <header class="game-sub-header">
+          <div class="gsh-left">
+            <button class="btn-sub-back btnBackToGameLobby" title="Kembali ke Pilihan Game">
+              <i class="fa-solid fa-arrow-left"></i> <span>Pilihan Game</span>
+            </button>
+            <button class="btn-sub-home btnBackToMain" title="Menu Utama">
+              <i class="fa-solid fa-house"></i>
+            </button>
+          </div>
+          <div class="gsh-title-center">
+            <span class="gsh-emoji">🍕</span>
+            <div>
+              <h2 class="gsh-title">KOKI PIZZA PECAHAN</h2>
+              <p class="gsh-subtitle">Hias irisan pizza sesuai pesanan pecahan pelanggan!</p>
+            </div>
+            <span class="gsh-emoji">👨‍🍳</span>
+          </div>
+          <button class="btn-sub-reset" id="btnPizzaReset" title="Mulai Ulang">
+            <i class="fa-solid fa-rotate-right"></i> Ulang
+          </button>
+        </header>
+
+        <!-- Score & Round Status Bar -->
+        <div class="game-sub-scorebar">
+          <div class="sub-stat-chip chip-round">
+            <span class="chip-icon">📋</span>
+            <span class="chip-label">Pesanan</span>
+            <strong id="pizzaOrderNum">1 / 5</strong>
+          </div>
+          <div class="sub-stat-chip chip-score">
+            <span class="chip-icon">⭐</span>
+            <span class="chip-label">Skor</span>
+            <strong id="pizzaScore">0</strong>
+          </div>
+          <div class="sub-stat-chip chip-streak">
+            <span class="chip-icon">🔥</span>
+            <span class="chip-label">Kombo</span>
+            <strong id="pizzaStreak">0</strong>
+          </div>
+          <div class="sub-stat-chip chip-coin">
+            <span class="chip-icon">🪙</span>
+            <span class="chip-label">Koin</span>
+            <strong id="pizzaCoins">0</strong>
+          </div>
+        </div>
+
+        <!-- Main Content Area: Order on Left, Pizza Pan on Right -->
+        <div class="pizza-game-stage">
+          <!-- Customer & Order Ticket -->
+          <div class="pizza-customer-ticket">
+            <div class="ticket-header">
+              <div class="customer-avatar-box">
+                <span class="c-avatar" id="pizzaCustomerAvatar">🦊</span>
+                <span class="c-badge">Pelanggan</span>
+              </div>
+              <div class="customer-speech-bubble" id="pizzaCustomerSpeech">
+                "Halo Koki Cilik! Tolong siapkan pesanan pizzaku ya!"
+              </div>
+            </div>
+
+            <div class="ticket-body">
+              <div class="ticket-stamp">PESANAN KHUSUS</div>
+              <div class="order-fraction-display">
+                <span class="ord-label">Nilai Pecahan:</span>
+                <div class="order-big-fraction">
+                  <span class="ob-num" id="pizzaTargetNum">3</span>
+                  <span class="ob-bar"></span>
+                  <span class="ob-den" id="pizzaTargetDen">4</span>
+                </div>
+              </div>
+              <p class="order-hint-text" id="pizzaTargetHint">Beri topping pada <b>3</b> dari <b>4</b> potong pizza!</p>
+            </div>
+
+            <!-- Customer Patience / Feedback Alert -->
+            <div class="pizza-feedback-box" id="pizzaFeedbackBox">
+              <span id="pizzaFeedbackIcon">👨‍🍳</span>
+              <p id="pizzaFeedbackText">Klik potongan pizza untuk memberi topping!</p>
+            </div>
+          </div>
+
+          <!-- Pizza Kitchen Bench -->
+          <div class="pizza-kitchen-bench">
+            <div class="pizza-cutting-board">
+              <!-- Pizza Circle & Slices Container (interactive SVG generated by JS) -->
+              <div class="pizza-pan-outer">
+                <div class="pizza-pan-rim"></div>
+                <div class="pizza-interactive-svg-box" id="pizzaSvgContainer">
+                  <!-- SVG injected dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Question & Fraction Choice Cards -->
+            <div class="pizza-question-panel" id="pizzaQuestionPanel">
+              <p class="pizza-q-prompt" id="pizzaQPrompt">Tebak Pecahan: <b>Berapa nilai pecahan irisan pizza di atas?</b></p>
+              <div class="pizza-choice-cards" id="pizzaChoiceCards">
+                <!-- Generated dynamically: 1/4, 2/4, 3/4, 4/4 -->
+              </div>
+            </div>
+
+            <!-- Live Selection Summary -->
+            <div class="pizza-selection-meter">
+              <div class="meter-text">
+                Irisan Terpilih:
+                <span class="meter-fraction">
+                  <strong id="pizzaSelectedNum">0</strong> / <strong id="pizzaTotalDen">4</strong>
+                </span>
+              </div>
+              <div class="meter-actions">
+                <button type="button" class="btn-pizza-action btn-clear-slices" id="btnPizzaClearSlices">
+                  <i class="fa-solid fa-broom"></i> Bersihkan
+                </button>
+                <button type="button" class="btn-pizza-action btn-serve-pizza" id="btnPizzaServe">
+                  <i class="fa-solid fa-bell-concierge"></i> Sajikan Pizza!
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- end gameViewPizzaChef -->
+
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <!-- 4.D SUBVIEW GAME 3: BALON PECAHAN SENILAI                   -->
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <div id="gameViewBalon" class="game-subview" style="display:none;">
+      <div class="game-play-wrapper balon-theme">
+        <header class="game-sub-header">
+          <div class="gsh-left">
+            <button class="btn-sub-back btnBackToGameLobby" title="Kembali ke Pilihan Game">
+              <i class="fa-solid fa-arrow-left"></i> <span>Pilihan Game</span>
+            </button>
+            <button class="btn-sub-home btnBackToMain" title="Menu Utama">
+              <i class="fa-solid fa-house"></i>
+            </button>
+          </div>
+          <div class="gsh-title-center">
+            <span class="gsh-emoji">🎈</span>
+            <div>
+              <h2 class="gsh-title">BALON PECAHAN SENILAI</h2>
+              <p class="gsh-subtitle">Letuskan hanya balon yang senilai dengan pecahan target!</p>
+            </div>
+            <span class="gsh-emoji">🎯</span>
+          </div>
+          <button class="btn-sub-reset" id="btnBalonReset" title="Mulai Ulang">
+            <i class="fa-solid fa-rotate-right"></i> Ulang
+          </button>
+        </header>
+
+        <!-- Score & Target Banner -->
+        <div class="balon-mission-header">
+          <div class="balon-target-banner">
+            <span class="target-title"><i class="fa-solid fa-crosshairs"></i> PECAHAN TARGET:</span>
+            <div class="target-fraction-badge" id="balonTargetDisplay">
+              <span class="tf-num">1</span>
+              <span class="tf-bar"></span>
+              <span class="tf-den">2</span>
+            </div>
+          </div>
+          <div class="balon-stats-cluster">
+            <div class="b-stat-chip chip-timer">
+              <span class="b-icon">⏱️</span>
+              <span class="b-lbl">Waktu</span>
+              <strong id="balonTimer">40s</strong>
+            </div>
+            <div class="b-stat-chip chip-score">
+              <span class="b-icon">⭐</span>
+              <span class="b-lbl">Skor</span>
+              <strong id="balonScore">0</strong>
+            </div>
+            <div class="b-stat-chip chip-popped">
+              <span class="b-icon">💥</span>
+              <span class="b-lbl">Letusan</span>
+              <strong id="balonPoppedCount">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Balloon Sky Stage -->
+        <div class="balon-sky-stage" id="balonSkyStage">
+          <!-- Animated Clouds -->
+          <div class="sky-cloud cloud-1"></div>
+          <div class="sky-cloud cloud-2"></div>
+          <!-- Balloons Grid Container -->
+          <div class="balon-cluster-grid" id="balonClusterGrid">
+            <!-- Balloons generated dynamically by JS -->
+          </div>
+        </div>
+
+        <!-- Alert & Feedback Toast inside balloon game -->
+        <div class="balon-hint-bar" id="balonHintBar">
+          <span class="bh-icon">💡</span>
+          <span id="balonHintText">Klik balon yang bernilai sama (senilai) dengan target! Contoh untuk 1/2: 2/4, 3/6, 4/8...</span>
+        </div>
+      </div>
+    </div><!-- end gameViewBalon -->
+
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <!-- 4.E SUBVIEW GAME 4: TIMBANGAN PECAHAN                       -->
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <div id="gameViewTimbangan" class="game-subview" style="display:none;">
+      <div class="game-play-wrapper timbangan-theme">
+        <header class="game-sub-header">
+          <div class="gsh-left">
+            <button class="btn-sub-back btnBackToGameLobby" title="Kembali ke Pilihan Game">
+              <i class="fa-solid fa-arrow-left"></i> <span>Pilihan Game</span>
+            </button>
+            <button class="btn-sub-home btnBackToMain" title="Menu Utama">
+              <i class="fa-solid fa-house"></i>
+            </button>
+          </div>
+          <div class="gsh-title-center">
+            <span class="gsh-emoji">⚖️</span>
+            <div>
+              <h2 class="gsh-title">TIMBANGAN PECAHAN</h2>
+              <p class="gsh-subtitle">Bandingkan kedua piringan: Mana yang lebih besar, atau apakah sama?</p>
+            </div>
+            <span class="gsh-emoji">🧠</span>
+          </div>
+          <button class="btn-sub-reset" id="btnTimbanganReset" title="Mulai Ulang">
+            <i class="fa-solid fa-rotate-right"></i> Ulang
+          </button>
+        </header>
+
+        <!-- Score & Round Status Bar -->
+        <div class="game-sub-scorebar">
+          <div class="sub-stat-chip chip-round">
+            <span class="chip-icon">⚖️</span>
+            <span class="chip-label">Ronde</span>
+            <strong id="scaleRoundNum">1 / 5</strong>
+          </div>
+          <div class="sub-stat-chip chip-score">
+            <span class="chip-icon">⭐</span>
+            <span class="chip-label">Skor</span>
+            <strong id="scaleScore">0</strong>
+          </div>
+          <div class="sub-stat-chip chip-streak">
+            <span class="chip-icon">✅</span>
+            <span class="chip-label">Benar</span>
+            <strong id="scaleCorrectCount">0</strong>
+          </div>
+        </div>
+
+        <!-- Scale Stage Area -->
+        <div class="scale-stage-area">
+          <div class="scale-apparatus-wrapper">
+            <!-- Balance scale structure -->
+            <div class="scale-beam-container" id="scaleBeamContainer">
+              <div class="scale-beam-bar" id="scaleBeamBar">
+                <!-- Left pan hanging rope and dish -->
+                <div class="scale-pan-assembly pan-left">
+                  <div class="pan-ropes"></div>
+                  <div class="pan-dish" id="scaleLeftDish">
+                    <div class="pan-dish-glow"></div>
+                    <div class="pan-dish-content">
+                      <div class="pan-fraction-display" id="scaleLeftFrac">
+                        <span class="pf-num">2</span>
+                        <span class="pf-bar"></span>
+                        <span class="pf-den">3</span>
+                      </div>
+                      <div class="pan-visual-box" id="scaleLeftVisual"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Center pivot fulcrum top pin -->
+                <div class="scale-pivot-center"></div>
+
+                <!-- Right pan hanging rope and dish -->
+                <div class="scale-pan-assembly pan-right">
+                  <div class="pan-ropes"></div>
+                  <div class="pan-dish" id="scaleRightDish">
+                    <div class="pan-dish-glow"></div>
+                    <div class="pan-dish-content">
+                      <div class="pan-fraction-display" id="scaleRightFrac">
+                        <span class="pf-num">3</span>
+                        <span class="pf-bar"></span>
+                        <span class="pf-den">4</span>
+                      </div>
+                      <div class="pan-visual-box" id="scaleRightVisual"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stand / Base Pillar -->
+            <div class="scale-stand-pillar">
+              <div class="pillar-neck"></div>
+              <div class="pillar-column"></div>
+              <div class="pillar-pedestal"></div>
+            </div>
+          </div>
+
+          <!-- Comparison Decision Panel -->
+          <div class="scale-decision-panel">
+            <h4 class="decision-prompt">Pecahan di Piringan <b>KIRI</b> bernilai ... dari Piringan <b>KANAN</b>:</h4>
+            <div class="scale-choice-buttons">
+              <button type="button" class="btn-scale-choice choice-greater" data-choice="greater" id="btnScaleGreater">
+                <span class="choice-sym">&gt;</span>
+                <span class="choice-txt">Lebih Besar Dari</span>
+              </button>
+              <button type="button" class="btn-scale-choice choice-equal" data-choice="equal" id="btnScaleEqual">
+                <span class="choice-sym">=</span>
+                <span class="choice-txt">Sama Besar (Senilai)</span>
+              </button>
+              <button type="button" class="btn-scale-choice choice-lesser" data-choice="lesser" id="btnScaleLesser">
+                <span class="choice-sym">&lt;</span>
+                <span class="choice-txt">Lebih Kecil Dari</span>
+              </button>
+            </div>
+
+            <!-- Explanation & Next Round Card -->
+            <div class="scale-explanation-card hidden" id="scaleExplanationCard">
+              <div class="exp-icon" id="scaleExpIcon">💡</div>
+              <div class="exp-body">
+                <strong id="scaleExpTitle"></strong>
+                <p id="scaleExpText"></p>
+              </div>
+              <button type="button" class="btn-scale-next" id="btnScaleNext">
+                <span>Soal Selanjutnya</span> <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- end gameViewTimbangan -->
+
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <!-- 4.F MODAL KEMENANGAN / SELESAI GAME UNIVERSAL               -->
+    <!-- ─────────────────────────────────────────────────────────── -->
+    <div id="gameHubWinModal" class="ut-win-overlay" style="display:none;" role="dialog" aria-modal="true">
+      <div class="ut-win-card">
+        <div class="ut-win-trophies" id="ghWinIcon">🏆✨🎊</div>
+        <h2 class="ut-win-title" id="ghWinTitle">HEBAT!<br>KAMU BERHASIL!</h2>
+        <p class="ut-win-subtitle" id="ghWinSubtitle">Kamu telah menyelesaikan tantangan game ini dengan gemilang!</p>
+        <div class="ut-win-stats">
+          <div class="ut-win-stat">
+            <span class="ws-icon">⭐</span>
+            <span class="ws-label">Skor Game</span>
+            <strong class="ws-val" id="ghWinFinalScore">0</strong>
+          </div>
+          <div class="ut-win-stat">
+            <span class="ws-icon">🪙</span>
+            <span class="ws-label">Koin Didapat</span>
+            <strong class="ws-val" id="ghWinCoins">0</strong>
+          </div>
+          <div class="ut-win-stat">
+            <span class="ws-icon">🎯</span>
+            <span class="ws-label">Pencapaian</span>
+            <strong class="ws-val" id="ghWinAccuracy">100%</strong>
+          </div>
+        </div>
+        <div class="ut-win-star-row">
+          <span class="win-star gh-star" id="ghStar1">⭐</span>
+          <span class="win-star gh-star" id="ghStar2">⭐</span>
+          <span class="win-star gh-star" id="ghStar3">⭐</span>
+        </div>
+        <div class="ut-win-buttons">
+          <button class="ut-btn-play-again" id="btnGhPlayAgain">
+            <i class="fa-solid fa-rotate-right"></i> Main Lagi
+          </button>
+          <button class="ut-btn-menu btnBackToGameLobby">
+            <i class="fa-solid fa-gamepad"></i> Pilihan Game
+          </button>
+          <button class="ut-btn-menu btnBackToMain">
+            <i class="fa-solid fa-house"></i> Menu Utama
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======================================================== -->
+  <section id="kuisSection" class="app-screen">
+    <div class="container">
+      <div class="screen-header">
+        <button class="btn-back btnBackToMain" title="Kembali ke Menu Utama">
+          <i class="fa-solid fa-arrow-left"></i> <span>Menu Utama</span>
+        </button>
+        <div class="screen-title-group">
+          <h2 class="screen-title"><span class="badge-icon">📝</span> Kuis Pecahan Cerdas</h2>
+          <p class="screen-subtitle">Uji kemampuan dan raih nilai terbaikmu!</p>
+        </div>
+      </div>
+
+      <!-- Kuis Wrapper -->
+      <div class="quiz-card-container">
+        
+        <!-- Quiz Intro Screen (Before starting) -->
+        <div id="quizIntroCard" class="quiz-state-card quiz-kids-stage-card">
+          <!-- Sky and Cloud Background Atmosphere -->
+          <div class="quiz-sky-backdrop">
+            <div class="q-cloud q-cloud-1"></div>
+            <div class="q-cloud q-cloud-2"></div>
+            <div class="q-cloud q-cloud-3"></div>
+          </div>
+
+          <!-- Hanging Banner: Belajar Pecahan Itu Menyenangkan -->
+          <div class="quiz-hanging-sign" aria-hidden="true">
+            <div class="sign-pins"></div>
+            <span class="sign-line1">Belajar Pecahan</span>
+            <span class="sign-line2">Itu Menyenangkan! ❤️</span>
+          </div>
+
+          <div class="quiz-kids-wrapper">
+            <!-- LEFT CHARACTER: Happy Schoolboy with Books and Pencils -->
+            <aside class="quiz-side-character char-boy-side" aria-label="Karakter Siswa Laki-Laki">
+              <div class="floating-frac-pill frac-pill-left" aria-hidden="true">
+                <span class="ff-num">1</span>
+                <span class="ff-bar"></span>
+                <span class="ff-den">2</span>
+              </div>
+              <div class="mini-pie-bubble pie-left" aria-hidden="true">
+                <svg viewBox="0 0 60 60" width="46" height="46">
+                  <circle cx="30" cy="30" r="28" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                  <!-- 1/2 Red Pie -->
+                  <path d="M 30 30 L 30 2 A 28 28 0 0 1 30 58 Z" fill="#ef4444"/>
+                </svg>
+              </div>
+
+              <div class="character-figure-glow">
+                <img src="assets/menu_boy.png" alt="Siswa SD Ceria" class="quiz-char-avatar boy-avatar">
+              </div>
+
+              <!-- Stack of Colorful Books + Cup of Pencils -->
+              <div class="desk-props-left">
+                <div class="quiz-books-stack">
+                  <div class="q-book b-blue"><span>Pecahan</span></div>
+                  <div class="q-book b-green"><span>Belajar</span></div>
+                  <div class="q-book b-orange"><span>Bersama</span></div>
+                  <div class="q-book b-red"><span>Mudah!</span></div>
+                </div>
+                <div class="quiz-pencil-cup" title="Pensil Warna">
+                  <div class="cup-body">
+                    <span class="p-tip p-red"></span>
+                    <span class="p-tip p-blue"></span>
+                    <span class="p-tip p-green"></span>
+                    <span class="p-tip p-yellow"></span>
+                    <span class="ruler-stick"></span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <!-- CENTER: Large Rounded White Card -->
+            <main class="quiz-center-card">
+              <div class="quiz-intro-hero">
+                <!-- Colorful 3D Pie Chart Vector Emblem -->
+                <div class="quiz-pie-emblem" aria-hidden="true">
+                  <div class="sun-sparkle ss-1"></div>
+                  <div class="sun-sparkle ss-2"></div>
+                  <div class="sun-sparkle ss-3"></div>
+                  <div class="sun-sparkle ss-4"></div>
+                  <svg class="quiz-pie-svg" viewBox="0 0 120 120" width="110" height="110">
+                    <defs>
+                      <filter id="pieShadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0284c7" flood-opacity="0.2"/>
+                      </filter>
+                    </defs>
+                    <!-- 3/4 Blue Pie + 1/4 Golden Yellow Pie with subtle 3D separation -->
+                    <g filter="url(#pieShadow)">
+                      <!-- Top-Right: 1/4 Golden Yellow -->
+                      <path d="M 64 56 L 64 12 A 46 46 0 0 1 108 56 Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+                      <!-- Top-Left, Bottom-Left, Bottom-Right: 3/4 Vibrant Blue -->
+                      <path d="M 56 58 L 12 58 A 46 46 0 0 1 56 12 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+                      <path d="M 56 64 L 12 64 A 46 46 0 0 0 56 110 Z" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+                      <path d="M 62 64 L 62 110 A 46 46 0 0 0 108 64 Z" fill="#2563eb" stroke="#1d4ed8" stroke-width="2"/>
+                    </g>
+                  </svg>
+                </div>
+
+                <h3 class="quiz-headline-3d">Tantangan 10 Soal Pecahan</h3>
+                <p class="quiz-subdesc">Jawablah 10 pertanyaan pilihan ganda seputar konsep pecahan, perbandingan, dan operasi hitung sederhana.</p>
+                
+                <div class="quiz-rules-list cute-rules-pill">
+                  <div class="q-rule-item">
+                    <span class="rule-icon-badge badge-blue"><i class="fa-solid fa-clock"></i></span>
+                    <span class="rule-txt"><strong>Waktu:</strong> 30 detik per soal</span>
+                  </div>
+                  <div class="q-rule-item">
+                    <span class="rule-icon-badge badge-gold"><i class="fa-solid fa-star"></i></span>
+                    <span class="rule-txt"><strong>Poin:</strong> 10 poin per jawaban benar (Maks 100)</span>
+                  </div>
+                  <div class="q-rule-item">
+                    <span class="rule-icon-badge badge-green"><i class="fa-solid fa-clipboard-check"></i></span>
+                    <span class="rule-txt"><strong>Laporan:</strong> Nilai tersimpan ke laporan hasil guru</span>
+                  </div>
+                </div>
+
+                <button id="btnStartQuiz" class="btn-start-quiz-glossy btn-bounce" type="button">
+                  <span class="btn-glossy-reflect"></span>
+                  <span class="btn-start-txt">Mulai Kuis Sekarang!</span>
+                  <span class="btn-start-arrow"><i class="fa-solid fa-play"></i></span>
+                </button>
+              </div>
+            </main>
+
+            <!-- RIGHT CHARACTER: Smiling Schoolgirl with Chalkboard & Rulers -->
+            <aside class="quiz-side-character char-girl-side" aria-label="Karakter Siswi Perempuan">
+              <div class="floating-frac-pill frac-pill-right" aria-hidden="true">
+                <span class="ff-num">3</span>
+                <span class="ff-bar"></span>
+                <span class="ff-den">4</span>
+              </div>
+              <div class="mini-pie-bubble pie-right" aria-hidden="true">
+                <svg viewBox="0 0 60 60" width="46" height="46">
+                  <circle cx="30" cy="30" r="28" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                  <!-- 3/4 Green Pie -->
+                  <path d="M 30 30 L 30 2 A 28 28 0 1 1 2 30 L 30 30 Z" fill="#22c55e"/>
+                </svg>
+              </div>
+
+              <div class="character-figure-glow">
+                <img src="assets/menu_girl.png" alt="Siswi SD Ceria" class="quiz-char-avatar girl-avatar">
+              </div>
+
+              <!-- Small Wooden Chalkboard with Math Inscription & Rulers -->
+              <div class="desk-props-right">
+                <div class="mini-chalkboard">
+                  <div class="chalkboard-frame">
+                    <div class="chalkboard-slate">
+                      <span class="chalk-title">Pecahan Kecil</span>
+                      <span class="chalk-body">Langkah Besar untuk Masa Depan!</span>
+                      <span class="chalk-heart">❤️</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="math-tools-decor">
+                  <div class="wooden-triangle-ruler" title="Penggaris Segitiga"></div>
+                  <div class="protractor-ruler" title="Busur Derajat"></div>
+                </div>
+              </div>
+            </aside>
+          </div>
+
+          <!-- Bottom Wooden Desk Surface Shelf -->
+          <div class="quiz-stage-desk-shelf">
+            <div class="desk-wood-grain"></div>
+          </div>
+        </div>
+
+        <!-- Active Question Card -->
+        <div id="quizPlayCard" class="quiz-state-card hidden">
+          <!-- Quiz Top Info Bar -->
+          <div class="quiz-top-bar">
+            <div class="question-tracker">
+              Soal <span id="currentQuestionNum">1</span> dari <span id="totalQuestionsNum">10</span>
+            </div>
+            <div class="quiz-timer-box" id="quizTimerBadge">
+              <i class="fa-solid fa-stopwatch"></i> <span id="quizTimeRemaining">30</span>s
+            </div>
+            <div class="quiz-live-score">
+              Skor: <span id="quizLiveScore">0</span>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="quiz-progress-track">
+            <div class="quiz-progress-fill" id="quizProgressBar" style="width: 10%;"></div>
+          </div>
+
+          <!-- Question Content -->
+          <div class="question-box">
+            <div class="question-tag" id="questionCategory">Konsep Pecahan</div>
+            <h3 class="question-text" id="questionText">Pertanyaan akan muncul di sini...</h3>
+            
+            <!-- Optional Visual Media for Question (e.g. Pizza SVG / Image) -->
+            <div id="questionVisualBox" class="q-visual-box hidden"></div>
+          </div>
+
+          <!-- Answer Options (4 buttons) -->
+          <div class="answer-options-grid" id="answerOptionsGrid">
+            <!-- Dynamic generated options -->
+          </div>
+
+          <!-- Immediate Feedback Explanation (Shown after answering) -->
+          <div class="explanation-box hidden" id="explanationBox">
+            <div class="exp-header" id="expHeader">
+              <i class="fa-solid fa-circle-check"></i> <span>Jawabanmu Benar!</span>
+            </div>
+            <p class="exp-text" id="expText">Pembahasan lengkap mengenai pertanyaan ini...</p>
+            <button class="btn btn-primary btn-bounce" id="btnNextQuestion">
+              Lanjut ke Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quiz Result Screen (After finishing) -->
+        <div id="quizResultCard" class="quiz-state-card hidden">
+          <div class="result-celebration">
+            <div class="result-trophy" id="resultTrophyIcon">🏆</div>
+            <h2 class="result-headline" id="resultHeadline">Luar Biasa, Kamu Hebat!</h2>
+            <p class="result-subtitle" id="resultSubtitle">Kamu telah menyelesaikan seluruh soal kuis pecahan!</p>
+
+            <div class="score-display-circle">
+              <span class="score-number" id="finalQuizScore">100</span>
+              <span class="score-max">/ 100</span>
+            </div>
+
+            <div class="result-stats-row">
+              <div class="r-stat">
+                <span class="r-icon correct">✓</span>
+                <span class="r-val" id="resCorrectCount">10</span>
+                <span class="r-lbl">Benar</span>
+              </div>
+              <div class="r-stat">
+                <span class="r-icon wrong">✗</span>
+                <span class="r-val" id="resWrongCount">0</span>
+                <span class="r-lbl">Salah</span>
+              </div>
+              <div class="r-stat">
+                <span class="r-icon star">⭐</span>
+                <span class="r-val" id="resStarsEarned">+3</span>
+                <span class="r-lbl">Bintang</span>
+              </div>
+            </div>
+
+            <div class="result-buttons">
+              <button class="btn btn-outline" id="btnRetakeQuiz">
+                <i class="fa-solid fa-rotate-left"></i> Ulangi Kuis
+              </button>
+              <button class="btn btn-purple" id="btnViewResultsPage">
+                <i class="fa-solid fa-chart-simple"></i> Lihat Halaman Hasil
+              </button>
+              <button class="btn btn-primary btnBackToMain">
+                <i class="fa-solid fa-house"></i> Kembali ke Menu Utama
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 6. HALAMAN MENU PETUNJUK                                 -->
+  <!-- ======================================================== -->
+  <section id="petunjukSection" class="app-screen">
+    <div class="container">
+      <div class="screen-header">
+        <button class="btn-back btnBackToMain" title="Kembali ke Menu Utama">
+          <i class="fa-solid fa-arrow-left"></i> <span>Menu Utama</span>
+        </button>
+        <div class="screen-title-group">
+          <h2 class="screen-title"><span class="badge-icon">💡</span> Petunjuk Penggunaan Aplikasi</h2>
+          <p class="screen-subtitle">Panduan lengkap menggunakan setiap fitur di PecahanSeru</p>
+        </div>
+      </div>
+
+      <div class="petunjuk-grid">
+        
+        <!-- Menu 1: MATERI -->
+        <div class="guide-card">
+          <div class="guide-icon icon-blue"><i class="fa-solid fa-book-open"></i></div>
+          <h3>1. Menu MATERI (Konsep Dasar &amp; Laboratorium Visual)</h3>
+          <ul>
+            <li>Klik tombol hijau <b>MATERI</b> di Menu Utama untuk membuka materi pembelajaran pecahan.</li>
+            <li>Pelajari 4 modul terstruktur: <b>Konsep Dasar Pecahan</b>, <b>Bentuk &amp; Konversi Pecahan (Biasa, Desimal, Persen)</b>, <b>Membandingkan Pecahan</b>, dan <b>Operasi Hitung Pecahan</b>.</li>
+            <li>Gunakan <b>Laboratorium Visual Pizza</b>: Geser slider pembilang &amp; penyebut atau klik langsung potongan pizza untuk melihat nilai pecahan secara nyata.</li>
+            <li>Tonton video animasi pembelajaran interaktif untuk penjelasan visual yang menyenangkan.</li>
+          </ul>
+        </div>
+
+        <!-- Menu 2: GAME -->
+        <div class="guide-card">
+          <div class="guide-icon icon-orange"><i class="fa-solid fa-gamepad"></i></div>
+          <h3>2. Menu GAME (Arena 4 Permainan Edukatif)</h3>
+          <ul>
+            <li>Klik tombol oranye <b>GAME</b> di Menu Utama untuk masuk ke arena bermain sambil belajar.</li>
+            <li><b>🐍🪜 Ular Tangga Pecahan:</b> Lempar dadu 3D, jawab soal konversi pecahan untuk memanjat tangga, dan hindari ular licik menuju kotak 36.</li>
+            <li><b>🍕👨‍🍳 Koki Pizza:</b> Hias topping lezat pada irisan pizza sesuai nilai pecahan pesanan pembeli lapar.</li>
+            <li><b>🎈🎯 Balon Senilai:</b> Asah ketangkasanmu mencari dan meletuskan balon pecahan yang senilai dengan target dalam 40 detik!</li>
+            <li><b>⚖️🧠 Timbangan Pecahan:</b> Amati diagram visual dan tentukan relasi Lebih Besar (&gt;), Sama (=), atau Lebih Kecil (&lt;).</li>
+          </ul>
+        </div>
+
+        <!-- Menu 3: QUIZ -->
+        <div class="guide-card">
+          <div class="guide-icon icon-purple"><i class="fa-solid fa-pen-to-square"></i></div>
+          <h3>3. Menu QUIZ (Uji Kemampuan &amp; Pembahasan Instan)</h3>
+          <ul>
+            <li>Klik tombol biru <b>QUIZ</b> di Menu Utama untuk menguji pemahaman pecahan kamu.</li>
+            <li>Kerjakan <b>10 soal acak berbobot</b> seputar pecahan dan konversinya.</li>
+            <li>Setiap soal memiliki timer hitung mundur <b>30 detik</b> — pilih jawaban yang paling tepat!</li>
+            <li>Dapatkan <b>pembahasan langsung</b> seketika setelah menjawab untuk belajar dari kunci jawaban.</li>
+            <li>Skor nilai (0–100), bintang ⭐, dan koin 🪙 otomatis tersimpan di rekap nilai guru.</li>
+          </ul>
+        </div>
+
+        <!-- Menu 4: PETUNJUK -->
+        <div class="guide-card">
+          <div class="guide-icon" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #7c3aed;"><i class="fa-solid fa-compass"></i></div>
+          <h3>4. Menu PETUNJUK (Panduan Aplikasi Lengkap)</h3>
+          <ul>
+            <li>Klik tombol ungu <b>PETUNJUK</b> di Menu Utama untuk membuka halaman panduan ini.</li>
+            <li>Pelajari fungsi setiap tombol, aturan permainan, dan alur penggunaan media belajar.</li>
+            <li>Gunakan tombol <b>← Menu Utama</b> di pojok kiri atas untuk kembali ke halaman utama kapan saja.</li>
+            <li>Tombol <b>🔊 Suara</b> di pojok layar dapat dinyalakan/dimatikan sesuai kenyamanan belajar kamu.</li>
+          </ul>
+        </div>
+
+        <!-- Menu 5: HASIL -->
+        <div class="guide-card">
+          <div class="guide-icon icon-green"><i class="fa-solid fa-award"></i></div>
+          <h3>5. Menu HASIL (Pencapaian Siswa &amp; Rekap Nilai)</h3>
+          <ul>
+            <li>Klik tombol pink <b>HASIL</b> di Menu Utama untuk memeriksa rapor pencapaian.</li>
+            <li><b>Tampilan Siswa:</b> Melihat riwayat skor kuis, total bintang yang diraih, koin reward, serta lencana kehormatan juara.</li>
+            <li><b>Tampilan Guru (Pak Adnan):</b> Membuka dasbor rekap nilai seluruh siswa kelas, filter pencarian siswa, catatan guru, dan <b>unduh data ke file CSV (Excel)</b>.</li>
+            <li>Kumpulkan semua lencana prestasi dengan menyelesaikan seluruh kuis dan memenangkan game!</li>
+          </ul>
+        </div>
+
+        <!-- Menu 6: KELUAR -->
+        <div class="guide-card">
+          <div class="guide-icon" style="background: linear-gradient(135deg, #fee2e2, #fecdd3); color: #e11d48;"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+          <h3>6. Menu KELUAR (Manajemen Sesi Belajar)</h3>
+          <ul>
+            <li>Klik tombol merah <b>KELUAR</b> di Menu Utama untuk mengakhiri sesi belajar secara aman.</li>
+            <li>Akan muncul jendela konfirmasi agar kamu tidak sengaja keluar saat sedang belajar.</li>
+            <li>Setelah keluar, kamu dapat login kembali sebagai <b>Siswa SD</b> atau masuk melalui <b>Portal Pendidik</b>.</li>
+          </ul>
+        </div>
+
+        <!-- Menu 7: TIPS & TRIK PECAHAN -->
+        <div class="guide-card">
+          <div class="guide-icon" style="background: linear-gradient(135deg, #fef9c3, #fde68a); color: #b45309;"><i class="fa-solid fa-lightbulb"></i></div>
+          <h3>7. Tips Kilat Konversi &amp; Konsep Pecahan</h3>
+          <ul>
+            <li><b>Pembilang (atas)</b> = Jumlah bagian yang diambil atau diwarnai.</li>
+            <li><b>Penyebut (bawah)</b> = Jumlah seluruh potongan yang sama besar.</li>
+            <li><b>Ubah Pecahan ke Desimal:</b> Bagi pembilang dengan penyebut (contoh: 1/2 = 1 ÷ 2 = 0.5).</li>
+            <li><b>Ubah Desimal ke Persen:</b> Kalikan dengan 100% (contoh: 0.5 × 100% = 50%).</li>
+            <li><b>Pecahan Senilai:</b> Kalikan pembilang dan penyebut dengan angka yang sama (contoh: 1/2 = 2/4 = 3/6).</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 7. HALAMAN MENU HASIL (SISWA & ADMIN VIEW)               -->
+  <!-- ======================================================== -->
+  <section id="hasilSection" class="app-screen">
+    <div class="container">
+      <div class="screen-header">
+        <button class="btn-back btnBackToMain" title="Kembali ke Menu Utama">
+          <i class="fa-solid fa-arrow-left"></i> <span>Menu Utama</span>
+        </button>
+        <div class="screen-title-group">
+          <h2 class="screen-title"><span class="badge-icon">🏆</span> Halaman Hasil &amp; Rekap Nilai</h2>
+          <p class="screen-subtitle" id="hasilSubtitle">Pencapaian belajar siswa dan statistik nilai</p>
+        </div>
+      </div>
+
+      <!-- VIEW SISWA: Rangkuman Pribadi & Lencana -->
+      <div id="hasilViewSiswa" class="hasil-view-container">
+        <!-- Profil Card Siswa -->
+        <div class="student-achievement-card">
+          <div class="achieve-user-profile">
+            <div class="achieve-avatar" id="achieveUserAvatar">🚀</div>
+            <div class="achieve-details">
+              <span class="role-pill">Profil Pelajar Cerdas</span>
+              <h3 id="achieveUserName">Rian Pratama</h3>
+              <p>Nomor Absen: <strong id="achieveUserAbsen">15</strong></p>
+            </div>
+          </div>
+
+          <div class="achieve-stat-cards">
+            <div class="mini-stat-card">
+              <span class="ms-icon">🏆</span>
+              <div class="ms-info">
+                <span class="ms-label">Nilai Kuis Tertinggi</span>
+                <strong class="ms-value" id="achieveBestScore">-</strong>
+              </div>
+            </div>
+            <div class="mini-stat-card">
+              <span class="ms-icon">⭐</span>
+              <div class="ms-info">
+                <span class="ms-label">Total Bintang</span>
+                <strong class="ms-value" id="achieveTotalStars">0</strong>
+              </div>
+            </div>
+            <div class="mini-stat-card">
+              <span class="ms-icon">🎮</span>
+              <div class="ms-info">
+                <span class="ms-label">Skor Game Terbaik</span>
+                <strong class="ms-value" id="achieveBestGameScore">-</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Badges / Lencana Penghargaan -->
+        <div class="badges-section">
+          <h3><i class="fa-solid fa-medal"></i> Lencana Penghargaan Kamu:</h3>
+          <div class="badges-grid" id="badgesGrid">
+            <div class="badge-box unlocked">
+              <div class="badge-img">🎮</div>
+              <strong>Penjelajah Baru</strong>
+              <small>Login pertama kali</small>
+            </div>
+            <div class="badge-box" id="badgeQuizMaster">
+              <div class="badge-img">🎯</div>
+              <strong>Master Kuis</strong>
+              <small>Raih nilai kuis 100</small>
+            </div>
+            <div class="badge-box" id="badgeGamePro">
+              <div class="badge-img">🐍</div>
+              <strong>Pemenang Ular Tangga</strong>
+              <small>Selesaikan game ular tangga</small>
+            </div>
+            <div class="badge-box" id="badgeCollector">
+              <div class="badge-img">👑</div>
+              <strong>Raja Pecahan</strong>
+              <small>Kumpulkan 10+ Bintang</small>
+            </div>
+            <div class="badge-box" id="badgeSkorBesar">
+              <div class="badge-img">⭐</div>
+              <strong>Bintang Ular Tangga</strong>
+              <small>Raih skor 50+ di game</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- CATATAN KHUSUS DARI GURU (HANYA BISA DIISI & DIUBAH OLEH ADMIN/GURU) -->
+        <div class="teacher-note-display-card" id="studentTeacherNoteSection">
+          <div class="tnd-card-header">
+            <div class="tnd-author-wrap">
+              <span class="tnd-author-icon">👨‍🏫</span>
+              <div>
+                <span class="tnd-badge-tag"><i class="fa-solid fa-comment-dots"></i> CATATAN RESMI GURU</span>
+                <h4 class="tnd-author-name">Pak Adnan Bahar, S.Pd.</h4>
+              </div>
+            </div>
+            <div class="tnd-header-meta">
+              <span class="tnd-status-pill" id="studentNoteStatusPill"><i class="fa-solid fa-circle-check"></i> Memuaskan</span>
+              <span class="tnd-date-text" id="studentNoteDateText">📅 2026-09-18</span>
+            </div>
+          </div>
+          <div class="tnd-card-body">
+            <div class="tnd-quote-mark">“</div>
+            <p class="tnd-note-text" id="studentNoteMessage">
+              Belum ada catatan khusus dari Pak Adnan. Tetap giat belajar dan raih bintang juara pecahan!
+            </p>
+          </div>
+          <div class="tnd-card-footer">
+            <span class="tnd-lock-notice">
+              <i class="fa-solid fa-lock"></i> Catatan evaluasi ini diberikan langsung oleh Administrator/Guru dan bersifat resmi.
+            </span>
+          </div>
+        </div>
+
+        <!-- Riwayat Pengerjaan Kuis Pribadi -->
+        <div class="history-table-card">
+          <h3><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pengerjaan Kuis Pribadi:</h3>
+          <div class="table-responsive">
+            <table class="data-table" id="studentHistoryTable">
+              <thead>
+                <tr>
+                  <th>Tanggal &amp; Waktu</th>
+                  <th>Nilai</th>
+                  <th>Benar / Total</th>
+                  <th>Predikat</th>
+                </tr>
+              </thead>
+              <tbody id="studentHistoryTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW ADMIN: Dashboard Lengkap Guru Pak Adnan -->
+      <div id="hasilViewAdmin" class="hasil-view-container hidden">
+        <div class="admin-dashboard-banner">
+          <div class="admin-header-left">
+            <div class="admin-shield"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <div>
+              <h3>Panel Rekap Nilai Guru &bull; Pak Adnan</h3>
+              <p>Kelola dan pantau seluruh data pengerjaan kuis siswa secara real-time.</p>
+            </div>
+          </div>
+
+          <div class="admin-actions">
+            <button class="btn btn-purple" id="btnAdminQuickNote">
+              <i class="fa-solid fa-pen-to-square"></i> Beri / Kelola Catatan Siswa
+            </button>
+            <button class="btn btn-success" id="btnExportCSV">
+              <i class="fa-solid fa-file-excel"></i> Unduh Rekap (CSV/Excel)
+            </button>
+            <button class="btn btn-danger" id="btnResetData">
+              <i class="fa-solid fa-trash-can"></i> Hapus Semua Data
+            </button>
+          </div>
+        </div>
+
+        <!-- Admin Filter & Search Toolbar -->
+        <div class="admin-filter-bar">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="adminSearchInput" placeholder="Cari berdasarkan nama atau absen siswa...">
+          </div>
+          <div class="filter-controls">
+            <select id="adminScoreFilter" class="custom-select">
+              <option value="all">Semua Nilai</option>
+              <option value="high">Nilai Tinggi (80 - 100)</option>
+              <option value="medium">Nilai Sedang (60 - 79)</option>
+              <option value="low">Perlu Bimbingan (&lt; 60)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Master Data Table -->
+        <div class="history-table-card">
+          <div class="table-info-bar">
+            <span>Menampilkan <strong id="adminRowCount">0</strong> rekaman nilai siswa</span>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="adminDataTable">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>No. Absen</th>
+                  <th>Nama Siswa</th>
+                  <th>Nilai Kuis</th>
+                  <th>Benar / Salah</th>
+                  <th>Waktu Pengerjaan</th>
+                  <th>Status</th>
+                  <th>Catatan Guru</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="adminDataTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL KELOLA CATATAN SISWA (KHUSUS ADMIN / PAK ADNAN) -->
+      <div id="adminNoteModal" class="modal-backdrop admin-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="adminNoteModalTitle">
+        <div class="admin-modal-container" style="max-width: 520px;">
+          <div class="admin-modal-glow glow-1"></div>
+          <div class="admin-modal-card" id="adminNoteModalCard">
+            <div class="admin-modal-topbar"></div>
+            <button type="button" class="admin-modal-close-btn" id="btnCloseNoteModal" title="Tutup Modal" aria-label="Tutup Modal">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="admin-modal-header" style="margin-bottom: 16px;">
+              <div class="admin-avatar-circle" style="width: 58px; height: 58px; font-size: 1.9rem; flex-shrink: 0;">
+                <span>📝</span>
+              </div>
+              <div class="admin-header-text">
+                <div class="admin-portal-tag">
+                  <i class="fa-solid fa-user-pen"></i> EVALUASI PENDIDIK
+                </div>
+                <h3 id="adminNoteModalTitle" class="admin-modal-title">Catatan Khusus Siswa</h3>
+                <p class="admin-modal-desc">
+                  Catatan ini hanya dapat dibuat oleh guru dan akan tampil di akun hasil belajar siswa.
+                </p>
+              </div>
+            </div>
+
+            <form id="formAdminNote" onsubmit="return false;" novalidate>
+              <!-- Target Siswa Selector -->
+              <div class="admin-field-group">
+                <label for="modalNoteStudentSelect" class="admin-field-label">
+                  <span class="label-left"><i class="fa-solid fa-user-graduate"></i> Pilih Siswa</span>
+                  <span class="label-hint" id="noteTargetAbsenHint">Absen Terpilih</span>
+                </label>
+                <div class="admin-input-wrapper">
+                  <span class="admin-input-icon"><i class="fa-solid fa-address-card"></i></span>
+                  <select id="modalNoteStudentSelect" class="admin-text-input custom-select" style="padding-left: 42px;">
+                    <!-- Populated dynamically via JS -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- Kategori Evaluasi / Tag -->
+              <div class="admin-field-group">
+                <label for="modalNoteTagSelect" class="admin-field-label">
+                  <span class="label-left"><i class="fa-solid fa-tag"></i> Status / Kategori Evaluasi</span>
+                  <span class="label-hint">Label Catatan</span>
+                </label>
+                <div class="admin-input-wrapper">
+                  <span class="admin-input-icon"><i class="fa-solid fa-clipboard-check"></i></span>
+                  <select id="modalNoteTagSelect" class="admin-text-input custom-select" style="padding-left: 42px;">
+                    <option value="Sangat Baik">🌟 Sangat Baik &amp; Memuaskan</option>
+                    <option value="Tuntas">👍 Tuntas &amp; Aktif</option>
+                    <option value="Perlu Bimbingan">🔍 Perlu Bimbingan / Remedial</option>
+                    <option value="Pengayaan">🚀 Siap Pengayaan Lanjutan</option>
+                    <option value="Motivasi">💪 Terus Semangat Belajar</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Quick Template Chips (1-Click Fill) -->
+              <div class="quick-template-chips-wrap">
+                <span class="qt-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Template Catatan Cepat:</span>
+                <div class="qt-chips">
+                  <button type="button" class="qt-chip" data-text="Luar biasa! Pemahaman konsep pecahan sangat matang dan teliti. Pertahankan prestasimu!">🌟 Sangat Baik</button>
+                  <button type="button" class="qt-chip" data-text="Bagus sekali! Tingkatkan latihan pada operasi pengurangan pecahan penyebut berbeda.">🔍 Pecahan Berbeda</button>
+                  <button type="button" class="qt-chip" data-text="Disarankan untuk mengulang simulator pizza pecahan dan meminta bimbingan jika ada kesulitan.">🌱 Perlu Bimbingan</button>
+                  <button type="button" class="qt-chip" data-text="Kerja kerasmu terlihat nyata. Terus giat belajar dan jangan mudah menyerah ya!">💪 Tetap Semangat</button>
+                </div>
+              </div>
+
+              <!-- Textarea Catatan Guru -->
+              <div class="admin-field-group">
+                <label for="modalNoteTextarea" class="admin-field-label">
+                  <span class="label-left"><i class="fa-solid fa-message"></i> Isi Catatan Guru (Pak Adnan)</span>
+                  <span class="label-hint">Maks. 300 karakter</span>
+                </label>
+                <textarea 
+                  id="modalNoteTextarea" 
+                  class="admin-text-input admin-textarea" 
+                  rows="4" 
+                  placeholder="Tuliskan apresiasi, masukan evaluasi, atau materi yang perlu diperkuat oleh siswa..." 
+                  required
+                ></textarea>
+              </div>
+
+              <!-- Alert Box -->
+              <div id="adminNoteModalAlert" class="admin-alert-banner hidden" role="alert">
+                <i class="fa-solid fa-circle-exclamation alert-icon"></i>
+                <span id="adminNoteModalAlertText">Catatan tidak boleh kosong.</span>
+              </div>
+
+              <!-- Modal Actions -->
+              <div class="admin-modal-actions">
+                <button type="button" class="btn-admin-cancel" id="btnCancelNoteModal">Batal</button>
+                <button type="button" class="btn-admin-delete-note hidden" id="btnDeleteStudentNote" title="Hapus Catatan Ini">
+                  <i class="fa-solid fa-trash-can"></i> Hapus
+                </button>
+                <button type="submit" class="btn-admin-submit" id="btnSaveStudentNote">
+                  <i class="fa-solid fa-floppy-disk"></i> Simpan Catatan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 8. MODAL DIALOG KONFIRMASI KELUAR (DESAIN MASKOT 3D)      -->
+  <!-- ======================================================== -->
+  <div id="logoutModal" class="modal-backdrop logout-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="logoutModalTitle">
+    <div class="logout-modal-card">
+      <!-- 3D Owl Mascot Illustration -->
+      <div class="logout-mascot-container">
+        <img src="assets/mascot_owl.png" alt="Maskot Burung Hantu Pecahan" class="logout-mascot-img">
+      </div>
+
+      <!-- Typography -->
+      <h3 class="logout-modal-title" id="logoutModalTitle">Konfirmasi Keluar</h3>
+      <p class="logout-modal-desc">
+        Apakah kamu yakin ingin keluar dari aplikasi<br>
+        <strong>PecahanSeru?</strong>
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="logout-modal-actions">
+        <button type="button" class="btn-logout-cancel" id="btnCancelLogout">
+          Batal, Lanjut<br>Belajar
+        </button>
+        <button type="button" class="btn-logout-confirm" id="btnConfirmLogout">
+          Ya, Keluar<br>Sekarang
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
