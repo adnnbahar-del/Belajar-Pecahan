@@ -2541,88 +2541,487 @@ body {
   border-radius: 0 0 4px 4px;
 }
 
-/* RESPONSIVE DESIGN UNTUK TABLET & HP */
+/* ========================================================
+   RESPONSIVE DESIGN UNTUK MENU UTAMA (TABLET & HP)
+   ======================================================== */
 @media (max-width: 1200px) {
   .character-pillar {
-    flex: 0 0 200px;
-    max-width: 210px;
+    flex: 0 0 170px;
+    max-width: 180px;
   }
   .character-figure-img {
-    max-height: 320px;
+    height: clamp(260px, 40vh, 380px);
   }
   .wood-side-sign {
-    flex: 0 0 140px;
+    flex: 0 0 130px;
   }
   .side-sign-title,
   .side-sign-list {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
   }
 }
 
 @media (max-width: 992px) {
   .menu-wood-header-area {
-    flex-direction: column;
-    align-items: center;
+    margin: 4px auto 0 auto;
+    max-height: none;
     gap: 8px;
   }
+  /* Sembunyikan sign samping di tablet/HP agar fokus ke menu tengah */
   .wood-side-sign {
-    display: none; /* Sembunyikan sign samping di layar sedang agar fokus ke menu utama */
+    display: none !important;
   }
+  /* Sembunyikan karakter anak SD di tablet/HP agar tidak menutupi tombol */
   .character-pillar {
-    display: none; /* Sembunyikan karakter samping di layar tablet sempit agar tombol tetap lega */
-  }
-  .menu-buttons-3d-grid {
-    max-width: 600px;
-  }
-}
-
-@media (max-width: 640px) {
-  .menu-scene-stage {
-    padding: 8px 12px 16px 12px;
-  }
-  .wood-main-board {
-    padding: 8px 16px 12px 16px;
-    border-radius: 24px;
-  }
-  .title-3d-text {
-    font-size: 2.2rem;
-  }
-  .wood-subtitle-text {
-    font-size: 1.15rem;
+    display: none !important;
   }
   .menu-buttons-3d-grid {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 14px 12px;
+    grid-template-rows: repeat(3, auto);
+    max-width: 540px;
+    width: 100%;
+    gap: 14px 14px;
   }
   .btn-3d-glossy {
-    border-radius: 24px;
-    padding: 14px 8px 12px 8px;
-    min-height: 120px;
+    height: auto;
+    min-height: 95px;
+    padding: 12px 10px;
   }
+}
+
+/* ── HP PORTRAIT & TABLET RAMPING (<= 768px) ── */
+@media (max-width: 768px) {
+  /* Pastikan halaman menu bisa di-scroll dengan mulus di layar HP yang pendek */
+  #mainMenuSection {
+    width: 100% !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .menu-scene-stage {
+    width: 100% !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    padding: 0 0 24px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .menu-backdrop-layer {
+    position: fixed !important;
+    inset: 0 !important;
+  }
+
+  /* Sembunyikan bubble melayang di HP agar layar bersih dan tidak mengganggu sentuhan */
+  .floating-frac-bubble {
+    display: none !important;
+  }
+
+  /* 1. Header / Top Status Bar di HP */
+  .menu-user-statusbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 40 !important;
+    padding: 7px 12px !important;
+    gap: 8px !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .user-profile-badge {
+    padding: 3px 10px 3px 4px !important;
+    gap: 8px !important;
+    max-width: 48% !important;
+    border-radius: 999px !important;
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .user-avatar-badge {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 1.1rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .user-badge-text {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .user-badge-text .greeting-sub {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.2px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .user-badge-text .greeting-name {
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .user-stat-pills {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .user-stat-pills .stat-pill {
+    padding: 4px 9px !important;
+    font-size: 0.82rem !important;
+    gap: 4px !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Sembunyikan kata "Bintang" dan "Koin" pada HP agar tidak menumpuk */
+  .user-stat-pills .stat-label {
+    display: none !important;
+  }
+
+  .user-stat-pills .stat-icon {
+    font-size: 0.95rem !important;
+  }
+
+  .user-stat-pills .stat-value {
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
+  }
+
+  .btn-logout-icon {
+    width: 35px !important;
+    height: 35px !important;
+    min-width: 35px !important;
+    font-size: 0.92rem !important;
+  }
+
+  .btn-audio-circle {
+    width: 35px !important;
+    height: 35px !important;
+    min-width: 35px !important;
+    font-size: 0.92rem !important;
+  }
+
+  /* 2. Papan Judul Tengah */
+  .menu-wood-header-area {
+    margin: 4px auto 2px auto !important;
+    max-height: none !important;
+    width: 100% !important;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .wood-center-board-wrapper {
+    width: auto !important;
+    max-width: 290px !important;
+    margin: 0 auto !important;
+  }
+
+  .wood-hanging-fixtures {
+    margin-bottom: -6px !important;
+  }
+
+  .metal-ring-fixture {
+    transform: scale(0.68) !important;
+  }
+
+  .wood-main-board {
+    padding: 6px 18px 8px 18px !important;
+    border-radius: 18px !important;
+    border-width: 3.5px !important;
+  }
+
+  .wood-bolt {
+    width: 7px !important;
+    height: 7px !important;
+  }
+
+  .title-3d-text {
+    font-size: 1.55rem !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .wood-sub-board {
+    padding: 2px 12px !important;
+    margin-top: -3px !important;
+    border-radius: 999px !important;
+  }
+
+  .wood-subtitle-text {
+    font-size: 0.85rem !important;
+  }
+
+  /* 3. Grid Tombol Menu Utama (2 Kolom x 3 Baris, Touch-Friendly) */
+  .menu-main-stage {
+    flex: none !important;
+    width: 100% !important;
+    padding: 6px 14px !important;
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+  }
+
+  .menu-buttons-3d-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: repeat(3, auto) !important;
+    gap: 12px 10px !important;
+    max-width: 440px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  .btn-3d-glossy {
+    height: auto !important;
+    min-height: 84px !important;
+    border-radius: 20px !important;
+    border-width: 3.5px !important;
+    padding: 10px 6px 12px 6px !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    cursor: pointer !important;
+  }
+
+  .btn-3d-glossy:active {
+    transform: translateY(3px) scale(0.97) !important;
+  }
+
+  .btn-content-wrap {
+    flex-direction: column !important;
+    gap: 5px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
   .btn-icon-box {
-    width: 58px;
-    height: 52px;
+    width: 44px !important;
+    height: 38px !important;
   }
+
   .btn-3d-text {
-    font-size: 1.2rem;
-    letter-spacing: 1px;
+    font-size: 1.05rem !important;
+    letter-spacing: 0.5px !important;
+    font-weight: 800 !important;
   }
-  .menu-bottom-decor-bar {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
+
+  /* 4. Elemen Dekorasi Bawah: Sembunyikan buku & kartu makna agar tidak menutupi tombol */
   .books-stack-corner,
   .right-signpost-board {
-    display: none;
+    display: none !important;
   }
+
+  .menu-bottom-decor-bar {
+    position: static !important;
+    margin-top: 8px !important;
+    padding: 4px 12px 18px 12px !important;
+    justify-content: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
   .center-slogan-plank {
-    width: 100%;
-    box-sizing: border-box;
+    display: inline-flex !important;
+    max-width: 92% !important;
+    padding: 4px 14px !important;
+    border-radius: 999px !important;
+    box-sizing: border-box !important;
   }
+
   .slogan-quote-text {
-    font-size: 0.95rem;
+    font-size: 0.78rem !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .slogan-star-icon {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* ── HP KECIL (<= 380px) ── */
+@media (max-width: 380px) {
+  .menu-user-statusbar {
+    padding: 5px 8px !important;
+    gap: 4px !important;
+  }
+
+  .user-profile-badge {
+    padding: 2px 7px 2px 3px !important;
+    gap: 5px !important;
+    max-width: 44% !important;
+  }
+
+  .user-avatar-badge {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.95rem !important;
+  }
+
+  .user-badge-text .greeting-sub {
+    font-size: 0.58rem !important;
+  }
+
+  .user-badge-text .greeting-name {
+    font-size: 0.76rem !important;
+  }
+
+  .user-stat-pills {
+    gap: 3px !important;
+  }
+
+  .user-stat-pills .stat-pill {
+    padding: 3px 6px !important;
+    font-size: 0.76rem !important;
+  }
+
+  .btn-logout-icon,
+  .btn-audio-circle {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .wood-center-board-wrapper {
+    max-width: 250px !important;
+  }
+
+  .title-3d-text {
+    font-size: 1.35rem !important;
+  }
+
+  .wood-subtitle-text {
+    font-size: 0.78rem !important;
+  }
+
+  .menu-main-stage {
+    padding: 4px 8px !important;
+  }
+
+  .menu-buttons-3d-grid {
+    gap: 8px 8px !important;
+  }
+
+  .btn-3d-glossy {
+    min-height: 76px !important;
+    border-radius: 16px !important;
+    padding: 8px 4px 10px 4px !important;
+  }
+
+  .btn-icon-box {
+    width: 36px !important;
+    height: 32px !important;
+  }
+
+  .btn-3d-text {
+    font-size: 0.95rem !important;
+  }
+}
+
+/* ── HP DALAM POSISI LANDSCAPE (MENDATAR: max-height <= 520px) ── */
+@media (max-height: 520px) and (orientation: landscape) {
+  #mainMenuSection {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .menu-scene-stage {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    gap: 4px !important;
+    padding: 0 0 16px 0 !important;
+  }
+
+  .menu-user-statusbar {
+    padding: 4px 14px !important;
+  }
+
+  .menu-wood-header-area {
+    margin: 2px auto !important;
+  }
+
+  .wood-center-board-wrapper {
+    max-width: 240px !important;
+  }
+
+  .wood-main-board {
+    padding: 4px 14px 4px 14px !important;
+  }
+
+  .title-3d-text {
+    font-size: 1.25rem !important;
+  }
+
+  .wood-sub-board {
+    display: none !important; /* Ringankan header di landscape */
+  }
+
+  .wood-side-sign,
+  .character-pillar,
+  .books-stack-corner,
+  .right-signpost-board,
+  .center-slogan-plank {
+    display: none !important;
+  }
+
+  .menu-main-stage {
+    padding: 2px 14px !important;
+  }
+
+  .menu-buttons-3d-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: repeat(2, auto) !important;
+    gap: 8px 12px !important;
+    max-width: 660px !important;
+    width: 100% !important;
+  }
+
+  .btn-3d-glossy {
+    min-height: 62px !important;
+    height: auto !important;
+    padding: 6px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  .btn-content-wrap {
+    flex-direction: row !important;
+    gap: 8px !important;
+    align-items: center !important;
+  }
+
+  .btn-icon-box {
+    width: 32px !important;
+    height: 28px !important;
+  }
+
+  .btn-3d-text {
+    font-size: 0.95rem !important;
   }
 }
 
@@ -9226,5 +9625,607 @@ body {
   transform: translateY(1px);
 }
 
+/* ========================================================
+   MASTER RESPONSIVE ENGINE (100% MOBILE & TABLET COMPATIBLE)
+   Android / iOS - Portrait & Landscape - Zero Overflow
+   ======================================================== */
 
+/* ── 1. GLOBAL MOBILE TOUCH & LAYOUT ESSENTIALS ── */
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  -webkit-text-size-adjust: 100% !important;
+  touch-action: manipulation;
+}
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Touch-action optimizations & eliminate iOS 300ms tap delay */
+button,
+a,
+input,
+select,
+[role="button"],
+.btn,
+.btn-step,
+.materi-tab-btn,
+.answer-option-btn,
+.sim-type-btn,
+.btn-3d-glossy,
+.chef-topping-btn,
+.balon-opt-btn,
+.btn-scale-opt {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+/* Prevent iOS Safari automatic zoom-in on input focus */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+select,
+textarea {
+  font-size: 16px !important;
+}
+
+/* ── 2. FLOATING AUDIO BUTTON INTELLIGENT POSITIONING ── */
+/* Sembunyikan floating audio bar saat menu utama aktif */
+body:has(#mainMenuSection.active) .audio-control-bar,
+#mainMenuSection.active ~ .audio-control-bar {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .audio-control-bar {
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 999 !important;
+  }
+  .audio-btn {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 1rem !important;
+  }
+  /* Berikan padding kanan pada header layar agar tidak bertabrakan dengan floating audio button */
+  .screen-header {
+    padding-right: 48px !important;
+  }
+}
+
+/* ── 3. UMUM: SCREEN HEADER, TITLE, & BACK BUTTON ── */
+@media (max-width: 768px) {
+  .app-screen {
+    padding: 16px 12px 48px 12px !important;
+  }
+
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 4px !important;
+  }
+
+  .screen-header {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .btn-back {
+    padding: 8px 16px !important;
+    font-size: 0.88rem !important;
+    min-height: 42px !important;
+    border-radius: 999px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .screen-title-group {
+    flex: 1 1 100% !important;
+    margin-top: 4px !important;
+  }
+
+  .screen-title-group .screen-title {
+    font-size: clamp(1.25rem, 5vw, 1.65rem) !important;
+    line-height: 1.25 !important;
+  }
+
+  .screen-title-group .screen-subtitle {
+    font-size: 0.82rem !important;
+    margin-top: 2px !important;
+  }
+}
+
+/* ── 4. HALAMAN LOGIN MODULAR ── */
+@media (max-width: 768px) {
+  #loginSection {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    padding: 12px 8px 36px 8px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .modular-header {
+    padding: 6px 8px !important;
+    gap: 8px !important;
+  }
+
+  .wooden-board-left,
+  .header-decor-right,
+  .character-slot,
+  .desk-surface-shelf,
+  .desk-decor-col {
+    display: none !important;
+  }
+
+  .login-center-stage {
+    padding: 6px 4px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .login-card-slot {
+    width: 100% !important;
+    max-width: 380px !important;
+    min-width: 0 !important;
+  }
+
+  .pure-login-card {
+    padding: 22px 18px !important;
+    border-radius: 24px !important;
+    width: 100% !important;
+  }
+
+  .card-main-title {
+    font-size: 1.65rem !important;
+  }
+
+  .btn-bounce {
+    min-height: 48px !important;
+    font-size: 1.05rem !important;
+    width: 100% !important;
+  }
+}
+
+/* ── 5. HALAMAN MATERI & SIMULATOR PECAHAN ── */
+@media (max-width: 768px) {
+  .materi-tabs {
+    display: flex !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    padding-bottom: 8px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+
+  .materi-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .materi-tab-btn {
+    flex-shrink: 0 !important;
+    padding: 8px 14px !important;
+    font-size: 0.88rem !important;
+    min-height: 42px !important;
+    border-radius: 14px !important;
+  }
+
+  .materi-content-card {
+    padding: 18px 12px !important;
+    border-radius: 20px !important;
+  }
+
+  .materi-panel#panelMateri1 .materi-article {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .simulator-col {
+    width: 100% !important;
+  }
+
+  .simulator-card {
+    padding: 16px 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .sim-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    text-align: center !important;
+  }
+
+  .sim-mode-toggle {
+    display: flex !important;
+    width: 100% !important;
+  }
+
+  .sim-type-btn {
+    flex: 1 !important;
+    justify-content: center !important;
+    min-height: 42px !important;
+    font-size: 0.9rem !important;
+  }
+
+  #pizzaSvg {
+    max-width: min(240px, 74vw) !important;
+    max-height: min(240px, 74vw) !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  .sim-controls {
+    width: 100% !important;
+  }
+
+  .control-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+  }
+
+  .slider-with-btns {
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .btn-step {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    font-size: 1.35rem !important;
+  }
+
+  .fraction-formula-display {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 14px !important;
+    text-align: center !important;
+  }
+
+  .anatomy-explanation {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  .gr-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .reading-chips-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .real-life-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .jenis-pecahan-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .ops-comparison {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .senilai-rules-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .video-materi-card {
+    padding: 16px 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .video-player-element {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 52vh !important;
+    border-radius: 12px !important;
+  }
+
+  .vm-yt-box {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 10px !important;
+  }
+
+  .btn-yt-visit {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+  }
+}
+
+/* ── 6. HALAMAN GAME ARENA ── */
+@media (max-width: 768px) {
+  .game-hub-container {
+    padding: 6px 4px !important;
+    width: 100% !important;
+  }
+
+  .game-hub-header {
+    flex-direction: column !important;
+    padding: 14px 10px !important;
+    gap: 12px !important;
+    text-align: center !important;
+  }
+
+  .hub-nav-left {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .hub-pill-btn {
+    min-height: 42px !important;
+    padding: 8px 14px !important;
+  }
+
+  .game-hub-title {
+    font-size: clamp(1.4rem, 5vw, 1.8rem) !important;
+  }
+
+  .grid-3-stations {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .game-station-card {
+    border-radius: 20px !important;
+    padding: 18px 14px !important;
+  }
+
+  /* Pizza Chef Game */
+  .pizza-game-stage {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .pizza-pan-outer {
+    width: min(260px, 76vw) !important;
+    height: min(260px, 76vw) !important;
+    margin: 0 auto !important;
+  }
+
+  .pizza-interactive-svg-box {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .chef-topping-btn {
+    min-height: 44px !important;
+  }
+
+  /* Balon Udara Game */
+  .balon-sky-stage {
+    height: clamp(260px, 46vh, 340px) !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .balon-options-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .balon-opt-btn {
+    min-height: 48px !important;
+    font-size: 1.1rem !important;
+  }
+
+  /* Timbangan Game */
+  .scale-choice-buttons {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .btn-scale-opt {
+    min-height: 46px !important;
+  }
+}
+
+/* ── 7. HALAMAN KUIS INTERAKTIF ── */
+@media (max-width: 768px) {
+  .quiz-card-container {
+    padding: 0 4px !important;
+  }
+
+  .quiz-kids-wrapper {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .quiz-side-character,
+  .quiz-hanging-sign,
+  .quiz-stage-desk-shelf {
+    display: none !important;
+  }
+
+  .quiz-center-card {
+    padding: 20px 14px !important;
+    border-radius: 22px !important;
+    width: 100% !important;
+  }
+
+  .quiz-headline-3d {
+    font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+  }
+
+  #btnStartQuiz {
+    width: 100% !important;
+    min-height: 50px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .quiz-top-bar {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    justify-content: space-between !important;
+  }
+
+  .question-tracker {
+    font-size: 0.95rem !important;
+  }
+
+  .quiz-timer-box {
+    padding: 4px 12px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .quiz-live-score {
+    font-size: 0.95rem !important;
+  }
+
+  .question-text {
+    font-size: clamp(1.1rem, 4vw, 1.35rem) !important;
+    line-height: 1.4 !important;
+  }
+
+  .answer-options-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .answer-option-btn {
+    min-height: 50px !important;
+    padding: 12px 14px !important;
+    font-size: 1rem !important;
+    border-radius: 14px !important;
+  }
+
+  #btnNextQuestion {
+    width: 100% !important;
+    min-height: 48px !important;
+    font-size: 1.05rem !important;
+  }
+
+  .quiz-result-card {
+    padding: 20px 14px !important;
+    border-radius: 22px !important;
+  }
+
+  .result-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .result-actions .btn {
+    width: 100% !important;
+    min-height: 48px !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── 8. HALAMAN PETUNJUK & HASIL BELAJAR ── */
+@media (max-width: 768px) {
+  .petunjuk-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .petunjuk-card {
+    padding: 18px 14px !important;
+    border-radius: 18px !important;
+  }
+
+  .badges-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .history-table-wrapper {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 14px !important;
+  }
+
+  .teacher-note-display-card {
+    padding: 16px 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .tnd-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+}
+
+/* ── 9. MODAL POP-UPS (LOGOUT & ADMIN) ── */
+@media (max-width: 768px) {
+  .logout-modal-backdrop {
+    padding: 16px !important;
+  }
+
+  .logout-modal-card {
+    width: min(92vw, 380px) !important;
+    padding: 22px 16px !important;
+    border-radius: 24px !important;
+  }
+
+  .logout-mascot-img {
+    width: 90px !important;
+    height: auto !important;
+  }
+
+  .logout-modal-title {
+    font-size: 1.35rem !important;
+  }
+
+  .logout-modal-actions {
+    display: flex !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .btn-logout-cancel,
+  .btn-logout-confirm {
+    flex: 1 !important;
+    min-height: 46px !important;
+    font-size: 0.88rem !important;
+    padding: 8px 10px !important;
+  }
+
+  .admin-modal-card {
+    width: min(95vw, 680px) !important;
+    padding: 18px 14px !important;
+    border-radius: 20px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* ── 10. FRACTION TYPOGRAPHY & MATH SYMBOLS READABILITY ── */
+.chalk-frac,
+.sample-fraction,
+.fraction-formula-display,
+.badge-fraction,
+.sim-fraction-badge {
+  letter-spacing: normal !important;
+}
+
+.chalk-frac sup,
+.sample-fraction sup {
+  font-weight: 800;
+}
+
+.chalk-frac sub,
+.sample-fraction sub {
+  font-weight: 800;
+}

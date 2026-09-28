@@ -418,6 +418,12 @@
       }
     }
 
+    // Manage floating audio control bar visibility (main menu has its own audio button in status bar)
+    const floatingAudio = document.querySelector('.audio-control-bar');
+    if (floatingAudio) {
+      floatingAudio.style.display = (screenName === 'mainMenu') ? 'none' : 'block';
+    }
+
     // Trigger on-enter hooks
     if (screenName === 'mainMenu') updateHeaderProfile();
     if (screenName === 'hasil') renderHasilScreen();
