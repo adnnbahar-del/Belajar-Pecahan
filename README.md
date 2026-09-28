@@ -11,15 +11,18 @@ Aplikasi media pembelajaran interaktif matematika materi Pecahan untuk siswa kel
 
 ## 💻 Cara Menjalankan Secara Lokal
 
-1. Pastikan **Node.js** sudah terpasang di komputer Anda.
-2. Buka terminal pada folder proyek:
+1. Buka terminal pada root direktori proyek:
    ```bash
-   cd Media_Pembelajaran_Pecahan
    node server.js
    ```
-3. Buka browser dan akses:
+   *(Atau cukup buka file `index.html` langsung di browser favorit Anda)*
+2. Buka browser dan akses:
    - Aplikasi Siswa: [http://localhost:8080](http://localhost:8080)
    - Dashboard Admin: [http://localhost:8080/admin.html](http://localhost:8080/admin.html)
+
+## 🌐 Akses GitHub Pages
+Aplikasi ini di-deploy langsung menggunakan **GitHub Pages**:
+- URL: `https://adnnbahar-del.github.io/Belajar-Pecahan/`
 
 ---
 Dibuat dengan ❤️ untuk kemudahan belajar matematika siswa Sekolah Dasar.

@@ -17,7 +17,7 @@ export interface LogoutConfirmModalProps {
   onConfirm: () => void;
 
   /**
-   * URL atau path gambar maskot burung hantu (opsional, default: /assets/mascot_owl.png)
+   * URL atau path gambar maskot burung hantu (opsional, default: assets/mascot_owl.png)
    */
   mascotSrc?: string;
 
@@ -39,7 +39,7 @@ export const LogoutConfirmModal: React.FC<LogoutConfirmModalProps> = ({
   isOpen,
   onClose,
   onConfirm,
-  mascotSrc = '/assets/mascot_owl.png',
+  mascotSrc = 'assets/mascot_owl.png',
   closeOnBackdropClick = true,
 }) => {
   // Tutup modal saat tombol Escape ditekan & kunci scroll latar belakang

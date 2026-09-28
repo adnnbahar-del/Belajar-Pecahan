@@ -34,7 +34,7 @@ export const AppExample: React.FC = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onConfirm={handleConfirmLogout}
-        mascotSrc="/assets/mascot_owl.png"
+        mascotSrc="assets/mascot_owl.png"
       />
     </div>
   );
